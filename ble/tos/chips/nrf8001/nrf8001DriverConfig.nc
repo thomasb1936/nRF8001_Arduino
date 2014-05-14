@@ -21,7 +21,7 @@
  * Author: Janos Sallai, Miklos Maroti
  */
 
-interface CC2420XDriverConfig
+interface nrf8001DriverConfig
 {
 	/**
 	 * Returns the length of a dummy header to align the payload properly.

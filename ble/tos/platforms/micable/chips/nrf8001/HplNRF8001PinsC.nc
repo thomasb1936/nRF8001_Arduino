@@ -68,12 +68,12 @@
  */
 
 /**
- * Mapping the CC2420 pins to Atmega128 pins for the micaZ platform.
+ * Mapping the nrf8001 pins to Atmega128 pins for the micaZ platform.
  * Information on the function of these pins can be found on pages
- * 14-15 of the CC2420 datasheet (rev 1.2).
+ * 14-15 of the nrf8001 datasheet (rev 1.2).
  *
  * <pre>
- * $Id: HplCC2420PinsC.nc,v 1.6 2010-06-29 22:07:54 scipio Exp $
+ * $Id: Hplnrf8001PinsC.nc,v 1.6 2010-06-29 22:07:54 scipio Exp $
  * </pre>
  *
  * @author Philip Levis

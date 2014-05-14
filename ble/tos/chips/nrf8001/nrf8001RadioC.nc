@@ -23,7 +23,7 @@
 
 #include <RadioConfig.h>
 
-configuration CC2420XRadioC
+configuration nrf8001RadioC
 {
 	provides 
 	{
@@ -77,12 +77,12 @@ configuration CC2420XRadioC
 
 implementation
 {
-	#define UQ_METADATA_FLAGS	"UQ_CC2420X_METADATA_FLAGS"
-	#define UQ_RADIO_ALARM		"UQ_CC2420X_RADIO_ALARM"
+	#define UQ_METADATA_FLAGS	"UQ_nrf8001_METADATA_FLAGS"
+	#define UQ_RADIO_ALARM		"UQ_nrf8001_RADIO_ALARM"
 
 // -------- RadioP
 
-	components CC2420XRadioP as RadioP;
+	components nrf8001RadioP as RadioP;
 
 #ifdef RADIO_DEBUG
 	components AssertC;
@@ -91,7 +91,7 @@ implementation
 	RadioP.Ieee154PacketLayer -> Ieee154PacketLayerC;
 	RadioP.RadioAlarm -> RadioAlarmC.RadioAlarm[unique(UQ_RADIO_ALARM)];
 	RadioP.PacketTimeStamp -> TimeStampingLayerC;
-	RadioP.CC2420XPacket -> RadioDriverLayerC;
+	RadioP.nrf8001Packet -> RadioDriverLayerC;
 
 // -------- RadioAlarm
 
@@ -267,7 +267,7 @@ implementation
 
 // -------- Driver
 
-	components CC2420XDriverLayerC as RadioDriverLayerC;
+	components nrf8001DriverLayerC as RadioDriverLayerC;
 	RadioDriverLayerC.Config -> RadioP;
 	RadioDriverLayerC.PacketTimeStamp -> TimeStampingLayerC;
 	PacketTransmitPower = RadioDriverLayerC.PacketTransmitPower;

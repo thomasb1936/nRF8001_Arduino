@@ -55,7 +55,7 @@ configuration Ieee154MessageC  {
   }
 
 } implementation {
-  components CC2420Ieee154MessageC as Msg;
+  components nrf8001Ieee154MessageC as Msg;
 
   SplitControl = Msg;
   SendResource = Msg;

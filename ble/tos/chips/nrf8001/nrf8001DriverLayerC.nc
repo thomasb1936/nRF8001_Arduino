@@ -22,9 +22,9 @@
  */
 
 #include <RadioConfig.h>
-#include <CC2420XDriverLayer.h>
+#include <nrf8001DriverLayer.h>
 
-configuration CC2420XDriverLayerC
+configuration nrf8001DriverLayerC
 {
 	provides
 	{
@@ -46,7 +46,7 @@ configuration CC2420XDriverLayerC
 
 	uses
 	{
-		interface CC2420XDriverConfig as Config;
+		interface nrf8001DriverConfig as Config;
 		interface PacketTimeStamp<TRadio, uint32_t>;
 
 		interface PacketFlag as TransmitPowerFlag;
@@ -58,11 +58,11 @@ configuration CC2420XDriverLayerC
 
 implementation
 {
-	components CC2420XDriverLayerP as DriverLayerP,
+	components nrf8001DriverLayerP as DriverLayerP,
 		BusyWaitMicroC,
 		TaskletC,
 		MainC,
-		HplCC2420XC as HplC;
+		Hplnrf8001C as HplC;
 
 	MainC.SoftwareInit -> DriverLayerP.SoftwareInit;
 	MainC.SoftwareInit -> HplC.Init;

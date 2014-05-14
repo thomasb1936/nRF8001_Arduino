@@ -43,7 +43,7 @@
 /**
  *
  * The Active Message layer on the micaz platform. This is a naming wrapper
- * around the CC2420 Active Message layer that implemets timesync interface (TEP 133).
+ * around the nrf8001 Active Message layer that implemets timesync interface (TEP 133).
  *
  * @author Philip Levis
  * @author Brano Kusy
@@ -73,9 +73,9 @@ configuration TimeSyncMessageC {
 }
 implementation {
 #ifdef RFXLINK
-  components CC2420XTimeSyncMessageC as AM;
+  components nrf8001TimeSyncMessageC as AM;
 #else
-  components CC2420TimeSyncMessageC as AM;
+  components nrf8001TimeSyncMessageC as AM;
 #endif
 
   SplitControl = AM;
@@ -91,7 +91,7 @@ implementation {
   TimeSyncPacket32khz       = AM;
   TimeSyncPacketMilli       = AM;
 
-  components CC2420PacketC;
-  PacketTimeStamp32khz = CC2420PacketC;
-  PacketTimeStampMilli = CC2420PacketC;
+  components nrf8001PacketC;
+  PacketTimeStamp32khz = nrf8001PacketC;
+  PacketTimeStampMilli = nrf8001PacketC;
 }

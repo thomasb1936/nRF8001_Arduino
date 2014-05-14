@@ -1,5 +1,5 @@
 This directory contains the TKN15.4 "platform glue" code for the micaz
-platform. Like the telos platform, micaz uses the CC2420 radio and in order not
+platform. Like the telos platform, micaz uses the nrf8001 radio and in order not
 to maintain identical configuration files, the micaz platform pulls in (uses) some
 files from the platform/telosb/mac/tkn154 directory. This includes the central
 MAC configurations "Ieee802154BeaconEnabledC" and "Ieee802154NonBeaconEnabledC",

@@ -21,13 +21,13 @@
  * Author: Janos Sallai
  */
 
-#include <CC2420XDriverLayer.h>
+#include <nrf8001DriverLayer.h>
 #include <Tasklet.h>
 #include <RadioAssert.h>
 #include <TimeSyncMessageLayer.h>
 #include <RadioConfig.h>
 #define spi_atomic
-module CC2420XDriverLayerP
+module nrf8001DriverLayerP
 {
 	provides
 	{
@@ -51,7 +51,7 @@ module CC2420XDriverLayerP
 		interface Resource as SpiResource;
 		interface BusyWait<TMicro, uint16_t>;
 		interface LocalTime<TRadio>;
-		interface CC2420XDriverConfig as Config;
+		interface nrf8001DriverConfig as Config;
 
 		interface FastSpiByte;
 		interface GeneralIO as CSN;
@@ -82,7 +82,7 @@ module CC2420XDriverLayerP
 
 implementation
 {
-	cc2420x_header_t* getHeader(message_t* msg)
+	nrf8001_header_t* getHeader(message_t* msg)
 	{
 		return ((void*)msg) + call Config.headerLength(msg);
 	}
@@ -92,7 +92,7 @@ implementation
 		return ((void*)msg);
 	}
 
-	cc2420x_metadata_t* getMeta(message_t* msg)
+	nrf8001_metadata_t* getMeta(message_t* msg)
 	{
 		return ((void*)msg) + sizeof(message_t) - call RadioPacket.metadataLength(msg);
 	}
@@ -142,7 +142,7 @@ implementation
 
 	uint16_t capturedTime;	// time when the last SFD interrupt has occured
 
-	inline cc2420X_status_t getStatus();
+	inline nrf8001_status_t getStatus();
 
 /*----------------- ALARM -----------------*/
 	tasklet_async event void RadioAlarm.fired()
@@ -172,12 +172,12 @@ implementation
 		uint16_t value = 0;
 		
 		RADIO_ASSERT( call SpiResource.isOwner() );
-		RADIO_ASSERT( reg == (reg & CC2420X_CMD_REGISTER_MASK) );
+		RADIO_ASSERT( reg == (reg & nrf8001_CMD_REGISTER_MASK) );
 
 		call CSN.set();
 		call CSN.clr();
 		
-		call FastSpiByte.splitWrite(CC2420X_CMD_REGISTER_READ | reg);
+		call FastSpiByte.splitWrite(nrf8001_CMD_REGISTER_READ | reg);
 		call FastSpiByte.splitReadWrite(0);
 		value = ((uint16_t)call FastSpiByte.splitReadWrite(0) << 8);
 		value += call FastSpiByte.splitRead();
@@ -186,17 +186,17 @@ implementation
 		return value;
 	}
 
-	inline cc2420X_status_t strobe(uint8_t reg)
+	inline nrf8001_status_t strobe(uint8_t reg)
 	{
-		cc2420X_status_t status;
+		nrf8001_status_t status;
 		
 		RADIO_ASSERT( call SpiResource.isOwner() );
-		RADIO_ASSERT( reg == (reg & CC2420X_CMD_REGISTER_MASK) );
+		RADIO_ASSERT( reg == (reg & nrf8001_CMD_REGISTER_MASK) );
 
 		call CSN.set();
 		call CSN.clr();
 
-		call FastSpiByte.splitWrite(CC2420X_CMD_REGISTER_WRITE | reg);
+		call FastSpiByte.splitWrite(nrf8001_CMD_REGISTER_WRITE | reg);
 		status.value = call FastSpiByte.splitRead();
 
 		call CSN.set();
@@ -204,21 +204,21 @@ implementation
 		
 	}
 
-	inline cc2420X_status_t getStatus() {
-		return strobe(CC2420X_SNOP);
+	inline nrf8001_status_t getStatus() {
+		return strobe(nrf8001_SNOP);
 	}
 
-	inline cc2420X_status_t writeRegister(uint8_t reg, uint16_t value)
+	inline nrf8001_status_t writeRegister(uint8_t reg, uint16_t value)
 	{
-		cc2420X_status_t status;
+		nrf8001_status_t status;
 		
 		RADIO_ASSERT( call SpiResource.isOwner() );
-		RADIO_ASSERT( reg == (reg & CC2420X_CMD_REGISTER_MASK) );
+		RADIO_ASSERT( reg == (reg & nrf8001_CMD_REGISTER_MASK) );
 
 		call CSN.set();
 		call CSN.clr();
 
-		call FastSpiByte.splitWrite(CC2420X_CMD_REGISTER_WRITE | reg);
+		call FastSpiByte.splitWrite(nrf8001_CMD_REGISTER_WRITE | reg);
 		call FastSpiByte.splitReadWrite(value >> 8);
 		call FastSpiByte.splitReadWrite(value & 0xff);
 		status.value = call FastSpiByte.splitRead();
@@ -227,9 +227,9 @@ implementation
 		return status;		
 	}
 
-	inline cc2420X_status_t writeTxFifo(uint8_t* data, uint8_t length)
+	inline nrf8001_status_t writeTxFifo(uint8_t* data, uint8_t length)
 	{
-		cc2420X_status_t status;
+		nrf8001_status_t status;
 		uint8_t idx;
 		
 		RADIO_ASSERT( call SpiResource.isOwner() );
@@ -237,7 +237,7 @@ implementation
 		call CSN.set();
 		call CSN.clr();
 
-		call FastSpiByte.splitWrite(CC2420X_CMD_REGISTER_WRITE | CC2420X_TXFIFO);
+		call FastSpiByte.splitWrite(nrf8001_CMD_REGISTER_WRITE | nrf8001_TXFIFO);
 		for(idx = 0; idx<length; idx++)
 			call FastSpiByte.splitReadWrite(data[idx]);
 		status.value = call FastSpiByte.splitRead();
@@ -257,15 +257,15 @@ implementation
 
 		// wait for fifo to go high or timeout
 		// timeout is now + 2 byte time (4 symbol time)
-		uint16_t timeout = call RadioAlarm.getNow() + 4 * CC2420X_SYMBOL_TIME;
+		uint16_t timeout = call RadioAlarm.getNow() + 4 * nrf8001_SYMBOL_TIME;
 			
 		while(call FIFO.get() == 0 && (timeout - call RadioAlarm.getNow() < 0x7fff));
 		return call FIFO.get();
 	}
 
-	inline cc2420X_status_t readLengthFromRxFifo(uint8_t* lengthPtr)
+	inline nrf8001_status_t readLengthFromRxFifo(uint8_t* lengthPtr)
 	{
-		cc2420X_status_t status;
+		nrf8001_status_t status;
 
 		RADIO_ASSERT( call SpiResource.isOwner() );
 		RADIO_ASSERT( call CSN.get() == 1 );
@@ -278,7 +278,7 @@ implementation
 		waitForRxFifoNoTimeout();
 		
 		// issue SPI command
-		call FastSpiByte.splitWrite(CC2420X_CMD_REGISTER_READ | CC2420X_RXFIFO);
+		call FastSpiByte.splitWrite(nrf8001_CMD_REGISTER_READ | nrf8001_RXFIFO);
 		status.value = call FastSpiByte.splitRead();
 		call FastSpiByte.splitWrite(0);
 		
@@ -330,8 +330,8 @@ implementation
 	inline void flushRxFifo() {
 		// make sure that at least one byte has been read 
 		// from the rx fifo before calling this function
-		strobe(CC2420X_SFLUSHRX);
-		strobe(CC2420X_SFLUSHRX);
+		strobe(nrf8001_SFLUSHRX);
+		strobe(nrf8001_SFLUSHRX);
 	}
 	
 /*----------------- INIT -----------------*/
@@ -372,23 +372,23 @@ implementation
 
 	inline void resetRadio() {
 		
-		cc2420X_iocfg0_t iocfg0;
-		cc2420X_mdmctrl0_t mdmctrl0;
+		nrf8001_iocfg0_t iocfg0;
+		nrf8001_mdmctrl0_t mdmctrl0;
 
     		// do a reset
 		call RSTN.clr();
 		call RSTN.set();
 
 		// set up fifop polarity and threshold
-		iocfg0 = cc2420X_iocfg0_default;
+		iocfg0 = nrf8001_iocfg0_default;
 		iocfg0.f.fifop_thr = 127;
-      		writeRegister(CC2420X_IOCFG0, iocfg0.value);
+      		writeRegister(nrf8001_IOCFG0, iocfg0.value);
 		      
 		// set up modem control
-		mdmctrl0 = cc2420X_mdmctrl0_default;
+		mdmctrl0 = nrf8001_mdmctrl0_default;
 		mdmctrl0.f.reserved_frame_mode = 1; //accept reserved frames
 		mdmctrl0.f.adr_decode = 0; // disable
-      		writeRegister(CC2420X_MDMCTRL0, mdmctrl0.value);		
+      		writeRegister(nrf8001_MDMCTRL0, mdmctrl0.value);		
 
 		state = STATE_PD;
 	}
@@ -398,8 +398,8 @@ implementation
 	{
 		resetRadio();		
 		
-		txPower = CC2420X_DEF_RFPOWER & CC2420X_TX_PWR_MASK;
-		channel = CC2420X_DEF_CHANNEL & CC2420X_CHANNEL_MASK;		
+		txPower = nrf8001_DEF_RFPOWER & nrf8001_TX_PWR_MASK;
+		channel = nrf8001_DEF_CHANNEL & nrf8001_CHANNEL_MASK;		
 
 	}
 
@@ -446,7 +446,7 @@ implementation
 
 	tasklet_async command error_t RadioState.setChannel(uint8_t c)
 	{
-		c &= CC2420X_CHANNEL_MASK;
+		c &= nrf8001_CHANNEL_MASK;
 
 		if( cmd != CMD_NONE )
 			return EBUSY;
@@ -462,12 +462,12 @@ implementation
 
 	inline void setChannel()
 	{
-		cc2420X_fsctrl_t fsctrl;
+		nrf8001_fsctrl_t fsctrl;
 		// set up freq
-		fsctrl= cc2420X_fsctrl_default;
+		fsctrl= nrf8001_fsctrl_default;
 		fsctrl.f.freq = 357+5*(channel - 11);
 		
-      		writeRegister(CC2420X_FSCTRL, fsctrl.value);
+      		writeRegister(nrf8001_FSCTRL, fsctrl.value);
 	}
 
 	inline void changeChannel()
@@ -497,7 +497,7 @@ implementation
 			&& state == STATE_PD  && isSpiAcquired() && call RadioAlarm.isFree() )
 		{
 			// start oscillator
-      			strobe(CC2420X_SXOSCON); 
+      			strobe(nrf8001_SXOSCON); 
 
 			call RadioAlarm.wait(PD_2_IDLE_TIME); // .86ms OSC startup time
 			state = STATE_PD_2_IDLE;
@@ -508,7 +508,7 @@ implementation
 			setChannel();
 
 			// start receiving
-      			strobe(CC2420X_SRXON); 
+      			strobe(nrf8001_SRXON); 
 			call RadioAlarm.wait(IDLE_2_RX_ON_TIME); // 12 symbol periods      			
 			state = STATE_IDLE_2_RX_ON;
 		}
@@ -519,14 +519,14 @@ implementation
       			call SfdCapture.disable();	
 
 			// stop receiving
-      			strobe(CC2420X_SRFOFF); 			
+      			strobe(nrf8001_SRFOFF); 			
 			state = STATE_IDLE;
 		}
 
 		if( cmd == CMD_TURNOFF && state == STATE_IDLE  && isSpiAcquired() )
 		{
       			// stop oscillator
-      			strobe(CC2420X_SXOSCOFF); 
+      			strobe(nrf8001_SXOSCOFF); 
 
 			// do a reset
 			initRadio();
@@ -624,16 +624,16 @@ implementation
 			return EBUSY;
 
 		p = (call PacketTransmitPower.isSet(msg) ?
-			call PacketTransmitPower.get(msg) : CC2420X_DEF_RFPOWER) & CC2420X_TX_PWR_MASK;
+			call PacketTransmitPower.get(msg) : nrf8001_DEF_RFPOWER) & nrf8001_TX_PWR_MASK;
 
 		if( p != txPower )
 		{
-			cc2420X_txctrl_t txctrl = cc2420X_txctrl_default;
+			nrf8001_txctrl_t txctrl = nrf8001_txctrl_default;
 
 			txPower = p;
 
 			txctrl.f.pa_level = txPower;
-			writeRegister(CC2420X_TXCTRL, txctrl.value);
+			writeRegister(nrf8001_TXCTRL, txctrl.value);
 		}
 
 		if( call Config.requiresRssiCca(msg) && !call CCA.get() )
@@ -661,7 +661,7 @@ implementation
 		// clean up the RXFIFO if necessary
 		if( cmd != CMD_NONE || (state != STATE_IDLE && state != STATE_RX_ON) || radioIrq || call SFD.get() == 1 ) {
 			// discard header we wrote to TXFIFO
-			strobe(CC2420X_SFLUSHTX);
+			strobe(nrf8001_SFLUSHTX);
 			// re-enable SFD interrupt
 			call SfdCapture.captureRisingEdge();
 			// and bail out
@@ -677,7 +677,7 @@ implementation
 			capturedTime = 0;
 
 			// start transmission
-			strobe(CC2420X_STXON);
+			strobe(nrf8001_STXON);
 			
 			// get a timestamp right after strobe returns
 			time = call RadioAlarm.getNow();
@@ -774,7 +774,7 @@ implementation
 	// recover from an error
 	// rx fifo flush does not always work
 	inline void recover() {
-		cc2420X_status_t status;
+		nrf8001_status_t status;
 		
 		call SfdCapture.disable();	
 
@@ -784,7 +784,7 @@ implementation
 		RADIO_ASSERT(state == STATE_PD);		
 		
 		// start oscillator
-      		strobe(CC2420X_SXOSCON); 
+      		strobe(nrf8001_SXOSCON); 
       		
       		// going idle in PD_2_IDLE_TIME
       		state = STATE_PD_2_IDLE;
@@ -807,7 +807,7 @@ implementation
 		setChannel();
 
       		// start receiving
-      		strobe(CC2420X_SRXON); 
+      		strobe(nrf8001_SRXON); 
       		state = STATE_IDLE_2_RX_ON;		
       		
 		call SfdCapture.captureRisingEdge();	
@@ -831,7 +831,7 @@ implementation
 		atomic sfdTime = capturedTime;
 		
 		// data starts after the length field
-		data = getPayload(rxMsg) + sizeof(cc2420x_header_t);
+		data = getPayload(rxMsg) + sizeof(nrf8001_header_t);
 
 		// read the length byte
 		spi_atomic readLengthFromRxFifo(&length);
@@ -1045,7 +1045,7 @@ implementation
 			}
 			else if( (state == STATE_TX_ON || state == STATE_BUSY_TX_2_RX_ON) && cmd == CMD_TRANSMIT)
 			{
-				cc2420X_status_t status;
+				nrf8001_status_t status;
 				
 				// it's a TX_END
 				state = STATE_RX_ON;
@@ -1074,7 +1074,7 @@ implementation
 
 				if ( status.tx_underflow == 1) {
 					// flush tx fifo
-					strobe(CC2420X_SFLUSHTX);
+					strobe(nrf8001_SFLUSHTX);
 					signal RadioSend.sendDone(FAIL);
 				} else {
 					signal RadioSend.sendDone(SUCCESS);
@@ -1180,7 +1180,7 @@ implementation
 	
 	async command uint8_t RadioPacket.headerLength(message_t* msg)
 	{
-		return call Config.headerLength(msg) + sizeof(cc2420x_header_t);
+		return call Config.headerLength(msg) + sizeof(nrf8001_header_t);
 	}
 
 	async command uint8_t RadioPacket.payloadLength(message_t* msg)
@@ -1199,14 +1199,14 @@ implementation
 
 	async command uint8_t RadioPacket.maxPayloadLength()
 	{
-		RADIO_ASSERT( call Config.maxPayloadLength() - sizeof(cc2420x_header_t) <= 125 );
+		RADIO_ASSERT( call Config.maxPayloadLength() - sizeof(nrf8001_header_t) <= 125 );
 
-		return call Config.maxPayloadLength() - sizeof(cc2420x_header_t);
+		return call Config.maxPayloadLength() - sizeof(nrf8001_header_t);
 	}
 
 	async command uint8_t RadioPacket.metadataLength(message_t* msg)
 	{
-		return call Config.metadataLength(msg) + sizeof(cc2420x_metadata_t);
+		return call Config.metadataLength(msg) + sizeof(nrf8001_metadata_t);
 	}
 
 	async command void RadioPacket.clear(message_t* msg)

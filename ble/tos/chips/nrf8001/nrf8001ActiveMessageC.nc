@@ -24,10 +24,10 @@
 #include <RadioConfig.h>
 
 #ifdef IEEE154FRAMES_ENABLED
-#error "You cannot use CC2420XActiveMessageC with IEEE154FRAMES_ENABLED defined"
+#error "You cannot use nrf8001XActiveMessageC with IEEE154FRAMES_ENABLED defined"
 #endif
 
-configuration CC2420XActiveMessageC
+configuration nrf8001XActiveMessageC
 {
 	provides 
 	{
@@ -71,7 +71,7 @@ configuration CC2420XActiveMessageC
 
 implementation
 {
-	components CC2420XRadioC as RadioC;
+	components nrf8001XRadioC as RadioC;
 
 	SplitControl = RadioC;
 

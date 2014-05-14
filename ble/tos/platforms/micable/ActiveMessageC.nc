@@ -43,7 +43,7 @@
 /**
  *
  * The Active Message layer on the Telos platform. This is a naming wrapper
- * around the CC2420 Active Message layer.
+ * around the nrf8001 Active Message layer.
  *
  * @author Philip Levis
  * @version $Revision: 1.9 $ $Date: 2010-06-29 22:07:54 $
@@ -68,9 +68,9 @@ configuration ActiveMessageC {
 }
 implementation {
 #ifdef RFXLINK
-  components CC2420XActiveMessageC as AM;
+  components nrf8001ActiveMessageC as AM;
 #else
-  components CC2420ActiveMessageC as AM;
+  components nrf8001ActiveMessageC as AM;
 #endif
 
   SplitControl = AM;
@@ -87,8 +87,8 @@ implementation {
   PacketTimeStamp32khz = AM;
   PacketTimeStampMilli = AM;
 #else
-  components CC2420PacketC;
-  PacketTimeStamp32khz = CC2420PacketC;
-  PacketTimeStampMilli = CC2420PacketC;
+  components nrf8001PacketC;
+  PacketTimeStamp32khz = nrf8001PacketC;
+  PacketTimeStampMilli = nrf8001PacketC;
 #endif
 }

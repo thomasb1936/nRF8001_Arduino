@@ -21,22 +21,22 @@
  * Author: Janos Sallai
  */
 
-#ifndef __CC2420XRADIO_H__
-#define __CC2420XRADIO_H__
+#ifndef __nrf8001RADIO_H__
+#define __nrf8001RADIO_H__
 
 #include <RadioConfig.h>
 #include <TinyosNetworkLayer.h>
 #include <Ieee154PacketLayer.h>
 #include <ActiveMessageLayer.h>
 #include <MetadataFlagsLayer.h>
-#include <CC2420XDriverLayer.h>
+#include <nrf8001DriverLayer.h>
 #include <TimeStampingLayer.h>
 #include <LowPowerListeningLayer.h>
 #include <PacketLinkLayer.h>
 
-typedef nx_struct cc2420xpacket_header_t
+typedef nx_struct nrf8001packet_header_t
 {
-	cc2420x_header_t cc2420x;
+	nrf8001_header_t nrf8001;
 	ieee154_simple_header_t ieee154;
 #ifndef TFRAMES_ENABLED
 	network_header_t network;
@@ -44,14 +44,14 @@ typedef nx_struct cc2420xpacket_header_t
 #ifndef IEEE154FRAMES_ENABLED
 	activemessage_header_t am;
 #endif
-} cc2420xpacket_header_t;
+} nrf8001packet_header_t;
 
-typedef nx_struct cc2420xpacket_footer_t
+typedef nx_struct nrf8001packet_footer_t
 {
 	// the time stamp is not recorded here, time stamped messaged cannot have max length
-} cc2420xpacket_footer_t;
+} nrf8001packet_footer_t;
 
-typedef struct cc2420xpacket_metadata_t
+typedef struct nrf8001packet_metadata_t
 {
 #ifdef LOW_POWER_LISTENING
 	lpl_metadata_t lpl;
@@ -61,7 +61,7 @@ typedef struct cc2420xpacket_metadata_t
 #endif
 	timestamp_metadata_t timestamp;
 	flags_metadata_t flags;
-	cc2420x_metadata_t cc2420x;
-} cc2420xpacket_metadata_t;
+	nrf8001_metadata_t nrf8001;
+} nrf8001packet_metadata_t;
 
-#endif//__CC2420XRADIO_H__
+#endif//__nrf8001RADIO_H__

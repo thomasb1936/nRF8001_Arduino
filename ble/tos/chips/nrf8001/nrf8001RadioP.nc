@@ -21,15 +21,15 @@
  * Author: Miklos Maroti, Janos Sallai
  */
 
-#include <CC2420XRadio.h>
+#include <nrf8001Radio.h>
 #include <RadioConfig.h>
 #include <Tasklet.h>
 
-module CC2420XRadioP
+module nrf8001RadioP
 {
 	provides
 	{
-		interface CC2420XDriverConfig;
+		interface nrf8001DriverConfig;
 		interface SoftwareAckConfig;
 		interface UniqueConfig;
 		interface CsmaConfig;
@@ -48,7 +48,7 @@ module CC2420XRadioP
 	{
 		interface Ieee154PacketLayer;
 		interface RadioAlarm;
-		interface RadioPacket as CC2420XPacket;
+		interface RadioPacket as nrf8001Packet;
 
 		interface PacketTimeStamp<TRadio, uint32_t>;
 	}
@@ -57,30 +57,30 @@ module CC2420XRadioP
 implementation
 {
 
-/*----------------- CC2420XDriverConfig -----------------*/
+/*----------------- nrf8001DriverConfig -----------------*/
 
-	async command uint8_t CC2420XDriverConfig.headerLength(message_t* msg)
+	async command uint8_t nrf8001DriverConfig.headerLength(message_t* msg)
 	{
-		return offsetof(message_t, data) - sizeof(cc2420xpacket_header_t);
+		return offsetof(message_t, data) - sizeof(nrf8001packet_header_t);
 	}
 
-	async command uint8_t CC2420XDriverConfig.maxPayloadLength()
+	async command uint8_t nrf8001DriverConfig.maxPayloadLength()
 	{
-		return sizeof(cc2420xpacket_header_t) + TOSH_DATA_LENGTH;
+		return sizeof(nrf8001packet_header_t) + TOSH_DATA_LENGTH;
 	}
 
-	async command uint8_t CC2420XDriverConfig.metadataLength(message_t* msg)
+	async command uint8_t nrf8001DriverConfig.metadataLength(message_t* msg)
 	{
 		return 0;
 	}
 
-	async command uint8_t CC2420XDriverConfig.headerPreloadLength()
+	async command uint8_t nrf8001DriverConfig.headerPreloadLength()
 	{
 		// we need the fcf, dsn, destpan and dest
 		return 7;
 	}
 
-	async command bool CC2420XDriverConfig.requiresRssiCca(message_t* msg)
+	async command bool nrf8001DriverConfig.requiresRssiCca(message_t* msg)
 	{
 		return call Ieee154PacketLayer.isDataFrame(msg);
 	}
@@ -210,18 +210,18 @@ implementation
 	{
 		// pure airtime: preable (4 bytes), SFD (1 byte), length (1 byte), payload + CRC (len bytes)
 
-		return call CC2420XPacket.payloadLength(msg) + 6;
+		return call nrf8001Packet.payloadLength(msg) + 6;
 	}
 
 /*----------------- RandomCollisionConfig -----------------*/
 
 	/*
-	 * We try to use the same values as in CC2420
+	 * We try to use the same values as in nrf8001
 	 *
-	 * CC2420_MIN_BACKOFF = 10 jiffies = 320 microsec
-	 * CC2420_BACKOFF_PERIOD = 10 jiffies
-	 * initial backoff = 0x1F * CC2420_BACKOFF_PERIOD = 310 jiffies = 9920 microsec
-	 * congestion backoff = 0x7 * CC2420_BACKOFF_PERIOD = 70 jiffies = 2240 microsec
+	 * nrf8001_MIN_BACKOFF = 10 jiffies = 320 microsec
+	 * nrf8001_BACKOFF_PERIOD = 10 jiffies
+	 * initial backoff = 0x1F * nrf8001_BACKOFF_PERIOD = 310 jiffies = 9920 microsec
+	 * congestion backoff = 0x7 * nrf8001_BACKOFF_PERIOD = 70 jiffies = 2240 microsec
 	 */
 
 #ifndef LOW_POWER_LISTENING
