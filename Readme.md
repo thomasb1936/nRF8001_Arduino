@@ -1,88 +1,70 @@
-#Release notes 0.9.0:
+#ble-sdk-arduino
 
-##Changes:
-* Changed the interface for lib_aci_init() to include the lib_aci_debug_print() interface.
+Bluetooth low energy SDK for Arduino (uses the nRF8001 from [Nordic Semiconductor](https://www.nordicsemi.com/ "Go to Nordic semiconductors homepage")). 
+This has been tested using the Arduino UNO, Mega and Leaonardo boards with the nRF2740/nRF2741 module or the Bluetooth low energy shield from Redbearlab. 
+The shield is available from seeedstudio and makershed.
 
-* Removed the lib_aci_debug_print()
+##Contents
+The BLE folder in \libraries\ contains the ported bluetooth library (ACI library) and an example project folder.
+This folder (BLE) should be extracted into the Arduino "libraries" folder. 
 
-* Changed interface for do_aci_setup()
+####Start using the SDK
+1. Download the SDK by clicking "Download ZIP" at the bottom of the right side menu.
+2. Unzip the file.
+3. In the arduino IDE, click 'Sketch' and choose 'Import library' and 'Add Library...'
+4. From the ble-sdk-arduino folder, choose to import the \libraries\BLE folder.
 
-* Created separate queue module
+####When using the Bluetooth low energy shield v.1.1 or v.2012.07:
+Plug the Bluetooth low energy shield onto the Arduino. Set the "Default Handshaking" switch to ON.
+The nRF8001 REQN is on Digital 9 of the Arduino. The nRF8001 RDYN is on Digital 8 of the Arduino.
+The SPI lines are routed through the central ICSP connector of the Arduino.
+To change the REQN and RDYN line to a different Arduino pin, set the "Default Handshaking" switch to OFF, wire the nRF8001 pins on the shield at J5 to the required Arduino pin.
 
-* Turned off debug serial output as default.
+####When using the Bluetooth low energy shield v.2.0:
+Plug the Bluetooth low energy shield to the Arduino.
+The REQN and RDYN pins are selectable from pin 2 to 12. 
+Select the Arduino pins to use for REQN and RDYN and put the jumpers to those pins. 
+Reset of the Arduino is connected to the Reset of the nRF8001, so every time a sketch is downloaded from the Arduino IDE the nRF8001 is also reset.
+The SPI lines are routed through the central ICSP connector of the Arduino.
 
-* Added platform specific code for Chipkit to some examples.
+####When using the nRF2740/nRF2741 modules directly wired to the Arduino:
+When the Arduino uses a 5v microcontroller,you may have to use level converters or a resistive divider to get the voltage to 3.3v for the lines that are output from Arduino to the nRF8001.
+The Arduino(3.3v-1.9v) or the Arduino DUE can be wired directly to the nRF8001 without any level converters or resistive dividers.
 
-##Fixes:
-* Added API for assert handling.
+####When using the nRF2740/nRF2741 modules with the nRF8001/nRF24L01+ shield adapter for Arduino:
+Plug the nRF8001/nRF24L01+ shield adapter for Arduino to the Arduino.
+The nRF8001 RDYN is on Digital 3. The nRF8001 REQN is on Digital 10.
+The SPI lines are available on Digital 11, 12, 13 and the central ICSP connector.
+To change the REQN and RDYN line to a different Arduino pin, cut the track on the PCB connecting the lines and wire the nRF8001 pins on the shield adapter at P10 to the required Arduino pin.
 
-* Added defines for platform specific code to improve portability for ChipKIT
+####Configure the MCU to nRF8001 PIN connection
+    aci_state.aci_pins.board_name = //See board.h for details, Use REDBEARLAB_SHIELD_V1_1 or BOARD_DEFAULT
+    aci_state.aci_pins.reqn_pin   = //SS for Nordic adapter shield , 9 for REDBEARLAB_SHIELD_V1_1 and REDBEARLAB_SHIELD_V2
+    aci_state.aci_pins.rdyn_pin   = // 3 for Nordic adapter shield ,  8 for REDBEARLAB_SHIELD_V1_1 and REDBEARLAB_SHIELD_V2
+    aci_state.aci_pins.mosi_pin   = MOSI;
+    aci_state.aci_pins.miso_pin   = MISO;
+    aci_state.aci_pins.sck_pin    = SCK;
+    
+    aci_state.aci_pins.spi_clock_divider     = SPI_CLOCK_DIV8; //This divides the input clock by 8 to get the SPI clock
+      
+    aci_state.aci_pins.reset_pin             = //4 for Nordic adapter shield, UNUSED for REDBEARLAB_SHIELD_V1_1, 4 or 7 or UNUSED for REDBEARLAB_SHIELD_V2
+    aci_state.aci_pins.active_pin            = UNUSED;
+    aci_state.aci_pins.optional_chip_sel_pin = UNUSED;
+      
+    aci_state.aci_pins.interface_is_interrupt  = false;
+    aci_state.aci_pins.interrupt_number	       = 1;
 
-* ACI_QUEUE_SIZE is set to 4 as default.
+####Modifying existing nRF8001 configuration:
+Make sure you always run the run_me_compile_xml_to_nRF8001_setup.bat with the nRFgo studio installed on a Windows PC to generate the setup required for the nRF8001 (services.h). 
+You need to run this again whenever you change the configuration in nRFgo studio.  
+  
+The nRFgo studio is a Windows program that can be run on the OS X using playonmac (tested) and could also be run on Linux using playonlinux (not tested).
 
-* The code works with the Leonardo, 
-  Note that the Leonardo is not reset when you start the serial monitor,
-  so a delay is needed if you want to be able to see the output of the initial prints using Serial
+##Forum
+[Nordic Developer Zone](http://devzone.nordicsemi.com/ "Go to nordic developer zone")
 
-* Rewrote nRF8001 Setup procedure, do_aci_setup().
-
-* Fixed interrupt handling so the SDK works both for polling and interrupts
-
-##Known issues:
-1. Assert functionality has been removed and should be put back to the SDK.
-Currently the asserts have been replaced with while(1)
-
-4. The FIFO/Queue uses the "one slot" free method to detect empty and full conditions.
-This wastes one extra element in the queue.
-The algorithm can be optimized to reduce RAM usage.
-
-5. Bonding info is stored in non-volatile memory on the Arduino after an ACI Timing Event and the Timing Event may not always arrive.
-This issue is applicable for all projects that use pairing.
-
-6. Documentation for using the Nordic adapter shield for nRF8001 with the nRF8001 Development kit and the Bluetooth low energy SDK for Arduino is incomplete.
-
-7. Documentation for the Bluetooth low energy SDK for Arduino is still in progress.
-
-9. Sending zero byte value from the hello world example causes nRF UART on iOS to crash.
-
-#Release notes 0.8.1:
-
-##Fixes:
-
-1. Added documentation for ble_A_Hello_World_Program
-
-2. Changed default PIN configuration for all examples
-
-3. Minor changed to ble_A_Hello_World_Program and ble_urat_project_Template
-
-4. Minor documentation changes 
-
-
-#Release notes 0.8.0:
-
-##Known issues:
-
-1. Assert functionality has been removed and should be put back to the SDK.
-Currently the asserts have been replaced with while(1)
-
-2. Platform specific code to be placed in a #define to improve portability.
-E.g. EIMSK. pgmspace etc.
-
-3. The BLE module, when using interrupts, may have issues that could stop the libray from working when the FIFO/Queue becomes full.
-Ensure that the queue size is at least 4 when using interrupts.
-This is specified in hal_aci_tl.h 
-'#define ACI_QUEUE_SIZE  4'. 
-The BLE module does not have any known issues when polling.
-
-4. The FIFO/Queue uses the "one slot" free method to detect empty and full conditions.
-This wastes one extra element in the queue.
-The algorithm can be optimized to reduce RAM usage.
-
-5. Bonding info is stored in non-volatile memory on the Arduino after an ACI Timing Event and the Timing Event may not always arrive.
-This issue is applicable for all projects that use pairing.
-
-6. Documentation for using the Nordic adapter shield for nRF8001 with the nRF8001 Development kit and the Bluetooth low energy SDK for Arduino is incomplete.
-
-7. Documentation for the Bluetooth low energy SDK for Arduino is still in progress.
-
-8. Tested with Arduino Uno. There seems to be some issues with the Arduino Leonardo that needs to be investigated.
+##Resources
+[Arduino](http://arduino.cc/ "Go to Arduino.cc")  
+[nRF8001](https://www.nordicsemi.com/eng/Products/Bluetooth-R-low-energy/nRF8001 "Go to product")  
+[RedBearLab BLE Shield from MakerShed](http://www.makershed.com/Bluetooth_Low_Energy_BLE_Shield_for_Arduino_p/mkrbl1.htm "Go to product")  
+[RedBearLab BLE Shield from SeeedStudio](http://www.seeedstudio.com/depot/bluetooth-40-low-energy-ble-shield-v20-p-1631.html "Go to product")  
