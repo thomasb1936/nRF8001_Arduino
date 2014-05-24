@@ -1,0 +1,38 @@
+#include "hal_aci_tl.h"
+#include "aci_queue.h"
+#include "ble_assert.h"
+
+configuration nRF8001DriverLayerC
+{
+	//provides
+	//{
+	//	interface hal_aci_tl;
+	//	interface aci_setup;
+	//}
+	
+}
+
+implementation
+{
+	components nRF8001DriverLayerP as DriverLayerP,
+		HplnRF8001C as HplC,
+		nRF8001LibAciP,
+		nRF8001aci_queueP;
+
+	MainC.SoftwareInit -> DriverLayerP.SoftwareInit;
+	MainC.SoftwareInit -> HplC.Init;
+
+	hal_aci_tl = DriverLayerP;
+	aci_setup = DriverLayerP;
+
+	DriverLayerP.ACTIVE -> HplC.ACTIVE;
+	DriverLayerP.RESET -> HplC.RESET;
+	DriverLayerP.REQN -> HplC.REQN;
+
+
+	DriverLayerP.SpiResource -> HplC.SpiResource;
+	DriverLayerP.FastSpiByte -> HplC;
+
+	DriverLayerP.lib_aci -> nRF8001LibAviP;
+
+}

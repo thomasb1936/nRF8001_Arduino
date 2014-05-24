@@ -21,7 +21,7 @@ echo $sep
 # MAKERULES:  /Users/dderiso/Code/TinyOs/tinyos-release/support/make/Makerules
 # ------------------------------------------------------------------
 
-dest="$TOSROOT/support/make/"
+dest="$TOSROOT/support/make"
 echo "...copying file support/make/micable.target" $dest
 cp support/make/micable.target $dest/
 
@@ -35,7 +35,7 @@ else
 	echo "	there was a problem copying"
 fi
 
-dest=$TOSROOT/tos/platforms/
+dest=$TOSROOT/tos/platforms
 echo "...copying directory tos/platforms/micable to " $dest
 yes | cp -rf tos/platforms/micable/ $dest
 
@@ -49,9 +49,10 @@ else
 	echo "	there was a problem copying"
 fi
 
-dest=$TOSROOT/tos/chips/
-echo "...copying tos/chips/nrf8001 to " $dest
-yes | cp -rf tos/chips/nrf8001/ $dest
+dest=$TOSROOT/tos/chips/nrf8001/
+echo "...copying tos/chips/nrf8001/control2.0 to " $dest
+yes | cp -rf tos/chips/nrf8001/control2.0/* $dest
+yes | cp -rf tos/chips/nrf8001/control2.0/Headers $dest
 
 # check if the correct file
 topline=`cat $TOSROOT/tos/chips/nrf8001/README | grep bluemoon`
