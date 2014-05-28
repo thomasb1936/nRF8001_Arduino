@@ -416,7 +416,7 @@ static uint8_t spi_readwrite(const uint8_t aci_byte)
 
 }
 
-bool hal_aci_tl_rx_q_empty (void)
+inline bool hal_aci_tl_rx_q_empty (void)
 {
   return aci_queue_is_empty(&aci_rx_q);
 }

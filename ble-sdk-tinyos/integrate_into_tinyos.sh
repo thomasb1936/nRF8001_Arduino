@@ -64,7 +64,22 @@ else
 	echo "	there was a problem copying"
 fi
 
+dest=$TOSROOT/apps/
+echo "copying all apps to " $dest
+yes | cp -rf apps/* $dest
+
+# check if the correct file
+topline=`cat $TOSROOT/apps/test.txt | grep bluemoon`
+
+if [ "$topline" == "#bluemoon" ]
+then
+	echo "	copied successfully"
+else
+	echo "	there was a problem copying"
+fi
+
 echo "done"
+
 
 
 

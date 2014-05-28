@@ -1,0 +1,3 @@
+COMPONENT=BLE_echoAppC
+include $(MAKERULES)
+

@@ -15,12 +15,12 @@ configuration HplNRF8001PinsC {
 
 implementation {
 
-	components Atm128SpiC, MotePlatformC, HplCC2420XSpiP, HplAtm128GeneralIOC as IO;
+	components Atm128SpiC, MotePlatformC, HplNRF8001SpiP, HplAtm128GeneralIOC as IO;
 
 	Init = Atm128SpiC;
 
-	SpiResource = HplnRF8001SpiP.Resource; 
-	HplnRF8001SpiP.SubResource -> Atm128SpiC.Resource[ unique("Atm128SpiC.Resource") ];
+	SpiResource = HplNRF8001SpiP.Resource; 
+	HplNRF8001SpiP.SubResource -> Atm128SpiC.Resource[ unique("Atm128SpiC.Resource") ];
 	//HplCC2420XSpiP.SS -> IO.PortB0; //No SS for nrf8001
 	FastSpiByte = Atm128SpiC;
   

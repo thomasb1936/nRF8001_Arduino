@@ -74,6 +74,9 @@ module nRF8001lib_aciP
   }
   provides
   {
+    interface lib_aci;
+    /*
+
     interface lib_aci_is_pipe_available;
     interface lib_aci_is_pipe_closed;
     interface lib_aci_is_discovery_finished;
@@ -104,7 +107,7 @@ module nRF8001lib_aciP
     interface lib_aci_open_remote_pipe;
     interface lib_aci_close_remote_pipe;
     interface lib_aci_set_key;
-    interface lib_aci_echo_msg;
+    //interface lib_aci_echo_msg;
     interface lib_aci_bond_request;
     interface lib_aci_event_peek;
     interface lib_aci_event_get;
@@ -123,7 +126,7 @@ module nRF8001lib_aciP
     interface lib_aci_event_queue_full;
     interface lib_aci_command_queue_empty;
     interface lib_aci_command_queue_full;
-
+*/
   }
 }
 
@@ -618,7 +621,7 @@ implementation
   }
 
 
-  command bool lib_aci_echo_msg(uint8_t msg_size, uint8_t *p_msg_data)
+  command bool lib_aci.lib_aci_echo_msg(uint8_t msg_size, uint8_t *p_msg_data)
   {
     aci_cmd_params_echo_t aci_cmd_params_echo;
     if(msg_size > (ACI_ECHO_DATA_MAX_LEN))
@@ -822,7 +825,7 @@ implementation
       hal_aci_tl_pin_reset();
   }
 
-  command bool lib_aci_event_queue_empty(void)
+  inline bool lib_aci_event_queue_empty(void)
   {
     return hal_aci_tl_rx_q_empty();
   }
@@ -832,7 +835,7 @@ implementation
     return hal_aci_tl_rx_q_full();
   }
 
-  command bool lib_aci_command_queue_empty(void)
+  command bool lib_aci.lib_aci_command_queue_empty(void)
   {
     return hal_aci_tl_tx_q_empty();
   }
