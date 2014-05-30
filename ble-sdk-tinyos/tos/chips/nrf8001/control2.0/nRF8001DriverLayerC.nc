@@ -12,15 +12,15 @@ implementation
 		//nRF8001aci_setupP as aci_setup,
 		nRF8001acilibP as acilib,
 		nRF8001hal_aci_tlP as hal,
-		HplNRF8001C as HplC;
+		HplNRF8001C as HplC,
+		MainC;
 
 
 
 	//MainC.SoftwareInit -> hal_aci_tl.hal_aci_tl_init; //using high level init
-	MainC.SoftwareInit -> HplC.Init;  //may not need this
+	MainC.SoftwareInit -> HplC.Init; 
 
-
-//Bring these to the top level for now so I can use them directly
+ //Bring these to the top level for now so I can use them directly
 	hal_aci_tl=hal.hal_aci_tl;
 	lib_aci=lib.lib_aci;
 	acil=acilib.acil;
@@ -33,15 +33,15 @@ implementation
 	hal.REQN -> HplC.REQN;
 	hal.RDYN -> HplC.RDYN;
 
+	hal.SpiResource -> HplC.SpiResource;
+	hal.FastSpiByte -> HplC.FastSpiByte;
 
 	//TODO missing busywait wiring
 	//TODO missing interrupt wiring 
-//	hal_aci_tl.SpiResource -> HplC.SpiResource;
-//	hal_aci_tl.FastSpiByte -> HplC;
 
 //*********Wiring for nRF8001lib_aci*****************//
 
-     lib.aci_queue->aciqueue.aci_queue;
+     lib.aci_queue -> aciqueue.aci_queue;
      lib.hal_aci_tl -> hal.hal_aci_tl;
 	 lib.acil -> acilib.acil;
 
@@ -51,7 +51,6 @@ implementation
 //    MainC.SoftwareInit -> lib_aci.init;
 
 //**********Wiring for nRF8001aci_setup*************//
-//	aci_setup = hal_aci_tl;
-//	aci_setup = lib_aci;
+
 	
 	}

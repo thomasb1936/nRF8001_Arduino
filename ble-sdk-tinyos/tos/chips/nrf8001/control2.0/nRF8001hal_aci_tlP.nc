@@ -335,7 +335,7 @@ implementation
 
     call ACTIVE.makeOutput();
     call REQN.makeOutput();
-    call RESET.makeOuput();
+    call RESET.makeOutput();
 
     call InterruptRDYN.disable(); //why would we disable the interrupt at start up?
 
@@ -345,7 +345,7 @@ implementation
     call hal_aci_tl.pin_reset();
 
     call BusyWait.wait(50);
-    call InterruptRDYN.enable();
+    call InterruptRDYN.enableRisingEdge();
 
   }
 
@@ -409,5 +409,15 @@ implementation
   command void hal_aci_tl.q_flush (void)
   {
     m_aci_q_flush();
+  }
+
+  async event void InterruptRDYN.fired()
+  {
+    //Do something
+  }
+
+  event void SpiResource.granted()
+  {
+    //do something
   }
 }

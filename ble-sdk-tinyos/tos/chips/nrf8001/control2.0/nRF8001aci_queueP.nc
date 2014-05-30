@@ -20,7 +20,7 @@ implementation
   {
     uint8_t loop;
 
-    ble_assert(NULL != aci_q);
+    //ble_assert(NULL != aci_q);
 
     aci_q->head = 0;
     aci_q->tail = 0;
@@ -33,8 +33,8 @@ implementation
 
   command bool aci_queue.dequeue(aci_queue_t *aci_q, hal_aci_data_t *p_data)
   {
-    ble_assert(NULL != aci_q);
-    ble_assert(NULL != p_data);
+    //ble_assert(NULL != aci_q);
+    //ble_assert(NULL != p_data);
 
     if (call aci_queue.is_empty(aci_q))
     {
@@ -49,8 +49,8 @@ implementation
 
   command bool aci_queue.dequeue_from_isr(aci_queue_t *aci_q, hal_aci_data_t *p_data)
   {
-    ble_assert(NULL != aci_q);
-    ble_assert(NULL != p_data);
+    //ble_assert(NULL != aci_q);
+    //ble_assert(NULL != p_data);
 
     if (call aci_queue.is_empty_from_isr(aci_q))
     {
@@ -67,8 +67,8 @@ implementation
   {
     const uint8_t length = p_data->buffer[0];
 
-    ble_assert(NULL != aci_q);
-    ble_assert(NULL != p_data);
+    //ble_assert(NULL != aci_q);
+    //ble_assert(NULL != p_data);
 
     if (call aci_queue.is_full(aci_q))
     {
@@ -86,8 +86,8 @@ implementation
   {
     const uint8_t length = p_data->buffer[0];
 
-    ble_assert(NULL != aci_q);
-    ble_assert(NULL != p_data);
+    //ble_assert(NULL != aci_q);
+    //ble_assert(NULL != p_data);
 
     if (call aci_queue.is_full_from_isr(aci_q))
     {
@@ -105,7 +105,7 @@ implementation
   {
     bool state = FALSE;
 
-    ble_assert(NULL != aci_q);
+    //ble_assert(NULL != aci_q);
 
     //Critical section
     //noInterrupts(); TODO - fix this call I have done this before in the boot sequence
@@ -120,7 +120,7 @@ implementation
 
   command bool aci_queue.is_empty_from_isr(aci_queue_t *aci_q)
   {
-    ble_assert(NULL != aci_q);
+    //ble_assert(NULL != aci_q);
 
     return aci_q->head == aci_q->tail;
   }
@@ -130,7 +130,7 @@ implementation
     uint8_t next;
     bool state;
 
-    ble_assert(NULL != aci_q);
+    //ble_assert(NULL != aci_q);
 
     //This should be done in a critical section
     //noInterrupts(); TODO - fix this call I have done this before in the boot sequence
@@ -155,15 +155,15 @@ implementation
   {
     const uint8_t next = (aci_q->tail + 1) % ACI_QUEUE_SIZE;
 
-    ble_assert(NULL != aci_q);
+    //ble_assert(NULL != aci_q);
     //TODO - check this funtion in the orginal BLE SDK
     return next == aci_q->head;
   }
 
   command bool aci_queue.peek(aci_queue_t *aci_q, hal_aci_data_t *p_data)
   {
-    ble_assert(NULL != aci_q);
-    ble_assert(NULL != p_data);
+    //ble_assert(NULL != aci_q);
+    //ble_assert(NULL != p_data);
 
     if (call aci_queue.is_empty(aci_q))
     {
@@ -177,8 +177,8 @@ implementation
 
   command bool aci_queue.peek_from_isr(aci_queue_t *aci_q, hal_aci_data_t *p_data)
   {
-    ble_assert(NULL != aci_q);
-    ble_assert(NULL != p_data);
+    //ble_assert(NULL != aci_q);
+    //ble_assert(NULL != p_data);
 
     if (call aci_queue.is_empty_from_isr(aci_q))
     {
