@@ -1,6 +1,6 @@
 // $Id: BlinkAppC.nc,v 1.6 2010-06-29 22:07:14 scipio Exp $
 
-/*									tab:4
+/*                  tab:4
  * Copyright (c) 2000-2005 The Regents of the University  of California.  
  * All rights reserved.
  *
@@ -57,7 +57,8 @@ implementation
   components new TimerMilliC() as Timer0;
   components new TimerMilliC() as Timer1;
   components new TimerMilliC() as Timer2;
-  components nRF8001DriverLayerC;
+  //components nRF8001hal_aci_tlP as hal;
+  components nRF8001DriverLayerC as Driver;
 
 
   BLE_echoC -> MainC.Boot;
@@ -66,5 +67,5 @@ implementation
   BLE_echoC.Timer1 -> Timer1;
   BLE_echoC.Timer2 -> Timer2;
   BLE_echoC.Leds -> LedsC;
-  BLE_echoC.lib_aci -> nRF8001DriverLayerC.lib_aci;
-
+  BLE_echoC.lib_aci -> Driver.lib_aci;
+  }

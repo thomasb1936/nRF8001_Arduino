@@ -52,7 +52,7 @@ module BLE_echoC @safe()
   uses interface Timer<TMilli> as Timer0;
   uses interface Timer<TMilli> as Timer1;
   uses interface Timer<TMilli> as Timer2;
-  uses interface lib_aci;
+  uses interface nRF8001lib_aci as lib_aci;
   uses interface Leds;
   uses interface Boot;
 }
@@ -70,7 +70,7 @@ implementation
     uint8_t msg_size=1;
     uint8_t *p_msg_data;
 
-    call lib_aci.lib_aci_echo_msg(msg_size, p_msg_data)
+    call lib_aci.echo_msg(msg_size, *p_msg_data);
     dbg("BlinkC", "Timer 0 fired @ %s.\n", sim_time_string());
     call Leds.led0Toggle();
   }

@@ -27,106 +27,13 @@ module nRF8001lib_aciP
 {
   uses
   {
-    interface aci_queue_enqueue;
-
-    interface hal_aci_tl_send;
-    interface hal_aci_tl_init;
-    interface hal_aci_tl_event_peek;
-    interface hal_aci_tl_event_get;
-    interface hal_aci_tl_q_flush;
-    interface hal_aci_tl_debug_print;
-    interface hal_aci_tl_pin_reset;
-    interface hal_aci_tl_rx_q_empty;
-    interface hal_aci_tl_rx_q_full;
-    interface hal_aci_tl_tx_q_empty;
-    interface hal_aci_tl_tx_q_full;
-
-
-    interface acil_encode_cmd_set_app_latency;
-    interface acil_encode_cmd_set_test_mode;
-    interface acil_encode_cmd_sleep;
-    interface acil_encode_baseband_reset;
-    interface acil_encode_direct_connect;
-    interface acil_encode_cmd_set_local_data;
-    interface acil_encode_cmd_connect;
-    interface acil_encode_cmd_disconnect;
-    interface acil_encode_cmd_bond;
-    interface acil_encode_cmd_wakeup;
-    interface acil_encode_cmd_get_address;
-    interface acil_encode_cmd_temparature;
-    interface acil_encode_cmd_send_data;
-    interface acil_encode_cmd_request_data;
-    interface acil_encode_cmd_change_timing_req;
-    interface acil_encode_cmd_change_timing_req_GAP_PPCP;
-    interface acil_encode_cmd_open_remote_pipe;
-    interface acil_encode_cmd_close_remote_pipe;
-    interface acil_encode_cmd_set_key;
-    interface acil_encode_cmd_echo_msg;
-    interface acil_encode_cmd_bond_security_request;
-    interface acil_encode_cmd_send_data_ack;
-    interface acil_encode_cmd_send_data_nack;
-    interface acil_encode_cmd_broadcast;
-    interface acil_encode_cmd_open_adv_pipes;
-    interface acil_encode_cmd_read_dynamic_data;
-    interface acil_encode_cmd_write_dynamic_data;
-    interface acil_encode_cmd_dtm_cmd;
-
+    interface nRF8001aci_queue as aci_queue;
+    interface nRF8001hal_aci_tl as hal_aci_tl;
+    interface nRF8001acilib as acil;
   }
   provides
   {
-    interface lib_aci;
-    /*
-
-    interface lib_aci_is_pipe_available;
-    interface lib_aci_is_pipe_closed;
-    interface lib_aci_is_discovery_finished;
-    interface lib_aci_board_init;
-    interface lib_aci_init;
-    interface lib_aci_get_nb_available_credits;
-    interface lib_aci_get_cx_interval_ms;
-    interface lib_aci_get_cx_interval;
-    interface lib_aci_set_app_latency;
-    interface lib_aci_test;
-    interface lib_aci_sleep;
-    interface lib_aci_radio_reset;
-    interface lib_aci_direct_connect;
-    interface lib_aci_device_version;
-    interface lib_aci_set_local_data;
-    interface lib_aci_connect;
-    interface lib_aci_disconnect;
-    interface lib_aci_bond;
-    interface lib_aci_wakeup;
-    interface lib_aci_set_tx_power;
-    interface lib_aci_get_address;
-    interface lib_aci_get_temperature;
-    interface lib_aci_get_battery_level;
-    interface lib_aci_send_data;
-    interface lib_aci_request_data;
-    interface lib_aci_change_timing;
-    interface lib_aci_change_timing_GAP_PPCP;
-    interface lib_aci_open_remote_pipe;
-    interface lib_aci_close_remote_pipe;
-    interface lib_aci_set_key;
-    //interface lib_aci_echo_msg;
-    interface lib_aci_bond_request;
-    interface lib_aci_event_peek;
-    interface lib_aci_event_get;
-    interface lib_aci_send_ack;
-    interface lib_aci_send_nack;
-    interface lib_aci_broadcast;
-    interface lib_aci_open_adv_pipes;
-    interface lib_aci_open_adv_pipe;
-    interface lib_aci_read_dynamic_data;
-    interface lib_aci_write_dynamic_data;
-    interface lib_aci_dtm_command;
-    interface lib_aci_flush;
-    interface lib_aci_debug_print;
-    interface lib_aci_pin_reset;
-    interface lib_aci_event_queue_empty;
-    interface lib_aci_event_queue_full;
-    interface lib_aci_command_queue_empty;
-    interface lib_aci_command_queue_full;
-*/
+    interface nRF8001lib_aci as lib_aci;
   }
 }
 
@@ -159,38 +66,38 @@ implementation
   extern aci_queue_t    aci_rx_q;
   extern aci_queue_t    aci_tx_q;
 
-  command bool lib_aci_is_pipe_available(aci_state_t *aci_stat, uint8_t pipe)
+  command bool lib_aci.is_pipe_available(aci_state_t *aci_stat, uint8_t pipe)
   {
     uint8_t byte_idx;
 
     byte_idx = pipe / 8;
     if (aci_stat->pipes_open_bitmap[byte_idx] & (0x01 << (pipe % 8)))
     {
-      return(true);
+      return(TRUE);
     }
-    return(false);
+    return(FALSE);
   }
 
 
-  command bool lib_aci_is_pipe_closed(aci_state_t *aci_stat, uint8_t pipe)
+  command bool lib_aci.is_pipe_closed(aci_state_t *aci_stat, uint8_t pipe)
   {
     uint8_t byte_idx;
 
     byte_idx = pipe / 8;
     if (aci_stat->pipes_closed_bitmap[byte_idx] & (0x01 << (pipe % 8)))
     {
-      return(true);
+      return(TRUE);
     }
-    return(false);
+    return(FALSE);
   }
 
 
-  command bool lib_aci_is_discovery_finished(aci_state_t *aci_stat)
+  command bool lib_aci.is_discovery_finished(aci_state_t *aci_stat)
   {
     return(aci_stat->pipes_open_bitmap[0]&0x01);
   }
 
-  command void lib_aci_board_init(aci_state_t *aci_stat)
+  command void lib_aci.board_init(aci_state_t *aci_stat)
   {
   	hal_aci_evt_t *aci_data = NULL;
   	aci_data = (hal_aci_evt_t *)&msg_to_send;
@@ -201,12 +108,12 @@ implementation
   	  The Bluetooth low energy Arduino shield v1.1 requires about 100ms to reset.
   	  This is not required for the nRF2740, nRF2741 modules
   	  */
-  	  delay(100);
+  	  //delay(100);TODO - implement delay or change this to the Tiny os Wait funtion(see boot sequence)
     
   	  /*
   	  Send the soft reset command to the nRF8001 to get the nRF8001 to a known state.
   	  */
-  	  lib_aci_radio_reset();
+  	  call lib_aci.radio_reset();
     
   	  while (1)
   	  {
@@ -215,7 +122,7 @@ implementation
   		*/
 
   			
-  		if (true == lib_aci_event_get(aci_stat, aci_data))
+  		if (TRUE == (call lib_aci.event_get(aci_stat, aci_data)))
   		{
   		  aci_evt_t * aci_evt;      
   		  aci_evt = &(aci_data->evt);
@@ -267,7 +174,7 @@ implementation
   }
 
 
-  command void lib_aci_init(aci_state_t *aci_stat, bool debug)
+  command void lib_aci.init(aci_state_t *aci_stat, bool debug)
   {
     uint8_t i;
 
@@ -281,10 +188,10 @@ implementation
 
 
 
-    is_request_operation_pending     = false;
-    is_indicate_operation_pending    = false; 
-    is_open_remote_pipe_pending      = false;
-    is_close_remote_pipe_pending     = false;
+    is_request_operation_pending     = FALSE;
+    is_indicate_operation_pending    = FALSE; 
+    is_open_remote_pipe_pending      = FALSE;
+    is_close_remote_pipe_pending     = FALSE;
 
 
 
@@ -300,18 +207,18 @@ implementation
     p_setup_msgs             = aci_stat->aci_setup_info.setup_msgs;
     
     
-    hal_aci_tl_init(&aci_stat->aci_pins, debug);
+    call hal_aci_tl.init(&aci_stat->aci_pins, debug);
     
-    lib_aci_board_init(aci_stat);
+    call lib_aci.board_init(aci_stat);
   }
 
 
-  uint8_t lib_aci_get_nb_available_credits(aci_state_t *aci_stat)
+  command uint8_t lib_aci.get_nb_available_credits(aci_state_t *aci_stat)
   {
     return aci_stat->data_credit_available;
   }
 
-  uint16_t lib_aci_get_cx_interval_ms(aci_state_t *aci_stat)
+  command uint16_t lib_aci.get_cx_interval_ms(aci_state_t *aci_stat)
   {
     uint32_t cx_rf_interval_ms_32bits;
     uint16_t cx_rf_interval_ms;
@@ -324,68 +231,68 @@ implementation
   }
 
 
-  uint16_t lib_aci_get_cx_interval(aci_state_t *aci_stat)
+  command uint16_t lib_aci.get_cx_interval(aci_state_t *aci_stat)
   {
     return aci_stat->connection_interval;
   }
 
 
-  uint16_t lib_aci_get_slave_latency(aci_state_t *aci_stat)
+  command uint16_t lib_aci.get_slave_latency(aci_state_t *aci_stat)
   {
     return aci_stat->slave_latency;
   }
 
 
-  command bool lib_aci_set_app_latency(uint16_t latency, aci_app_latency_mode_t latency_mode)
+  command bool lib_aci.set_app_latency(uint16_t latency, aci_app_latency_mode_t latency_mode)
   {
     aci_cmd_params_set_app_latency_t aci_set_app_latency;
     
     aci_set_app_latency.mode    = latency_mode;
     aci_set_app_latency.latency = latency;  
-    acil_encode_cmd_set_app_latency(&(msg_to_send.buffer[0]), &aci_set_app_latency);
+    call acil.encode_cmd_set_app_latency(&(msg_to_send.buffer[0]), &aci_set_app_latency);
     
-    return hal_aci_tl_send(&msg_to_send);
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_test(aci_test_mode_change_t enter_exit_test_mode)
+  command bool lib_aci.test(aci_test_mode_change_t enter_exit_test_mode)
   {
     aci_cmd_params_test_t aci_cmd_params_test;
     aci_cmd_params_test.test_mode_change = enter_exit_test_mode;
-    acil_encode_cmd_set_test_mode(&(msg_to_send.buffer[0]), &aci_cmd_params_test);
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_set_test_mode(&(msg_to_send.buffer[0]), &aci_cmd_params_test);
+    return (call hal_aci_tl.send(&msg_to_send));
   }
 
 
-  command bool lib_aci_sleep()
+  command bool lib_aci.sleep()
   {
-    acil_encode_cmd_sleep(&(msg_to_send.buffer[0]));
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_sleep(&(msg_to_send.buffer[0]));
+    return (call hal_aci_tl.send(&msg_to_send));
   }
 
 
-  command bool lib_aci_radio_reset()
+  command bool lib_aci.radio_reset()
   {
-    acil_encode_baseband_reset(&(msg_to_send.buffer[0]));
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_baseband_reset(&(msg_to_send.buffer[0]));
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_direct_connect()
+  command bool lib_aci.direct_connect()
   {
-    acil_encode_direct_connect(&(msg_to_send.buffer[0]));
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_direct_connect(&(msg_to_send.buffer[0]));
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_device_version()
+  command bool lib_aci.device_version()
   {
-    acil_encode_cmd_get_device_version(&(msg_to_send.buffer[0]));
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_get_device_version(&(msg_to_send.buffer[0]));
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_set_local_data(aci_state_t *aci_stat, uint8_t pipe, uint8_t *p_value, uint8_t size)
+  command bool lib_aci.set_local_data(aci_state_t *aci_stat, uint8_t pipe, uint8_t *p_value, uint8_t size)
   {
     aci_cmd_params_set_local_data_t aci_cmd_params_set_local_data;
     
@@ -393,33 +300,33 @@ implementation
         ||
         (size > ACI_PIPE_TX_DATA_MAX_LEN))
     {
-      return false;
+      return FALSE;
     }
 
     aci_cmd_params_set_local_data.tx_data.pipe_number = pipe;
     memcpy(&(aci_cmd_params_set_local_data.tx_data.aci_data[0]), p_value, size);
-    acil_encode_cmd_set_local_data(&(msg_to_send.buffer[0]), &aci_cmd_params_set_local_data, size);
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_set_local_data(&(msg_to_send.buffer[0]), &aci_cmd_params_set_local_data, size);
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
-  command bool lib_aci_connect(uint16_t run_timeout, uint16_t adv_interval)
+  command bool lib_aci.connect(uint16_t run_timeout, uint16_t adv_interval)
   {
     aci_cmd_params_connect_t aci_cmd_params_connect;
     aci_cmd_params_connect.timeout      = run_timeout;
     aci_cmd_params_connect.adv_interval = adv_interval;
-    acil_encode_cmd_connect(&(msg_to_send.buffer[0]), &aci_cmd_params_connect);
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_connect(&(msg_to_send.buffer[0]), &aci_cmd_params_connect);
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_disconnect(aci_state_t *aci_stat, aci_disconnect_reason_t reason)
+  command bool lib_aci.disconnect(aci_state_t *aci_stat, aci_disconnect_reason_t reason)
   {
     bool ret_val;
     uint8_t i;
     aci_cmd_params_disconnect_t aci_cmd_params_disconnect;
     aci_cmd_params_disconnect.reason = reason;
-    acil_encode_cmd_disconnect(&(msg_to_send.buffer[0]), &aci_cmd_params_disconnect);
-    ret_val = hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_disconnect(&(msg_to_send.buffer[0]), &aci_cmd_params_disconnect);
+    ret_val = call hal_aci_tl.send(&msg_to_send);
     // If we have actually sent the disconnect
     if (ret_val)
     {
@@ -437,88 +344,88 @@ implementation
   }
 
 
-  command bool lib_aci_bond(uint16_t run_timeout, uint16_t adv_interval)
+  command bool lib_aci.bond(uint16_t run_timeout, uint16_t adv_interval)
   {
     aci_cmd_params_bond_t aci_cmd_params_bond;
     aci_cmd_params_bond.timeout = run_timeout;
     aci_cmd_params_bond.adv_interval = adv_interval;
-    acil_encode_cmd_bond(&(msg_to_send.buffer[0]), &aci_cmd_params_bond);
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_bond(&(msg_to_send.buffer[0]), &aci_cmd_params_bond);
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_wakeup()
+  command bool lib_aci.wakeup()
   {
-    acil_encode_cmd_wakeup(&(msg_to_send.buffer[0]));
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_wakeup(&(msg_to_send.buffer[0]));
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_set_tx_power(aci_device_output_power_t tx_power)
+  command bool lib_aci.set_tx_power(aci_device_output_power_t tx_power)
   {
     aci_cmd_params_set_tx_power_t aci_cmd_params_set_tx_power;
     aci_cmd_params_set_tx_power.device_power = tx_power;
-    acil_encode_cmd_set_radio_tx_power(&(msg_to_send.buffer[0]), &aci_cmd_params_set_tx_power);
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_set_radio_tx_power(&(msg_to_send.buffer[0]), &aci_cmd_params_set_tx_power);
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_get_address()
+  command bool lib_aci.get_address()
   {
-    acil_encode_cmd_get_address(&(msg_to_send.buffer[0]));
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_get_address(&(msg_to_send.buffer[0]));
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_get_temperature()
+  command bool lib_aci.get_temperature()
   {
-    acil_encode_cmd_temparature(&(msg_to_send.buffer[0]));
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_temparature(&(msg_to_send.buffer[0]));
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_get_battery_level()
+  command bool lib_aci.get_battery_level()
   {
-    acil_encode_cmd_battery_level(&(msg_to_send.buffer[0]));
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_battery_level(&(msg_to_send.buffer[0]));
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_send_data(uint8_t pipe, uint8_t *p_value, uint8_t size)
+  command bool lib_aci.send_data(uint8_t pipe, uint8_t *p_value, uint8_t size)
   {
-    bool ret_val = false;
+    bool ret_val = FALSE;
     aci_cmd_params_send_data_t aci_cmd_params_send_data;
 
     
     if(!((p_services_pipe_type_map[pipe-1].pipe_type == ACI_TX) ||
         (p_services_pipe_type_map[pipe-1].pipe_type == ACI_TX_ACK)))
     {
-      return false;
+      return FALSE;
     }
 
     if (size > ACI_PIPE_TX_DATA_MAX_LEN)
     {
-      return false;
+      return FALSE;
     }
     {
         aci_cmd_params_send_data.tx_data.pipe_number = pipe;
         memcpy(&(aci_cmd_params_send_data.tx_data.aci_data[0]), p_value, size);
-        acil_encode_cmd_send_data(&(msg_to_send.buffer[0]), &aci_cmd_params_send_data, size);
+        call acil.encode_cmd_send_data(&(msg_to_send.buffer[0]), &aci_cmd_params_send_data, size);
         
-        ret_val = hal_aci_tl_send(&msg_to_send);          
+        ret_val = call hal_aci_tl.send(&msg_to_send);          
     }
     return ret_val;
   }
 
 
-  command bool lib_aci_request_data(aci_state_t *aci_stat, uint8_t pipe)
+  command bool lib_aci.request_data(aci_state_t *aci_stat, uint8_t pipe)
   {
-    bool ret_val = false;
+    bool ret_val = FALSE;
     aci_cmd_params_request_data_t aci_cmd_params_request_data;
 
     if(!((p_services_pipe_type_map[pipe-1].location == ACI_STORE_REMOTE)&&(p_services_pipe_type_map[pipe-1].pipe_type == ACI_RX_REQ)))
     {
-      return false;
+      return FALSE;
     }
 
 
@@ -529,37 +436,37 @@ implementation
 
 
         aci_cmd_params_request_data.pipe_number = pipe;
-        acil_encode_cmd_request_data(&(msg_to_send.buffer[0]), &aci_cmd_params_request_data);
+        call acil.encode_cmd_request_data(&(msg_to_send.buffer[0]), &aci_cmd_params_request_data);
 
-        ret_val = hal_aci_tl_send(&msg_to_send);
+        ret_val = call hal_aci_tl.send(&msg_to_send);
       }
     }
     return ret_val;
   }
 
 
-  command bool lib_aci_change_timing(uint16_t minimun_cx_interval, uint16_t maximum_cx_interval, uint16_t slave_latency, uint16_t timeout)
+  command bool lib_aci.change_timing(uint16_t minimun_cx_interval, uint16_t maximum_cx_interval, uint16_t slave_latency, uint16_t timeout)
   {
     aci_cmd_params_change_timing_t aci_cmd_params_change_timing;
     aci_cmd_params_change_timing.conn_params.min_conn_interval = minimun_cx_interval;
     aci_cmd_params_change_timing.conn_params.max_conn_interval = maximum_cx_interval;
     aci_cmd_params_change_timing.conn_params.slave_latency     = slave_latency;    
     aci_cmd_params_change_timing.conn_params.timeout_mult      = timeout;     
-    acil_encode_cmd_change_timing_req(&(msg_to_send.buffer[0]), &aci_cmd_params_change_timing);
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_change_timing_req(&(msg_to_send.buffer[0]), &aci_cmd_params_change_timing);
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_change_timing_GAP_PPCP()
+  command bool lib_aci.change_timing_GAP_PPCP()
   {
-    acil_encode_cmd_change_timing_req_GAP_PPCP(&(msg_to_send.buffer[0]));
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_change_timing_req_GAP_PPCP(&(msg_to_send.buffer[0]));
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_open_remote_pipe(aci_state_t *aci_stat, uint8_t pipe)
+  command bool lib_aci.open_remote_pipe(aci_state_t *aci_stat, uint8_t pipe)
   {
-    bool ret_val = false;
+    bool ret_val = FALSE;
     aci_cmd_params_open_remote_pipe_t aci_cmd_params_open_remote_pipe;
 
     if(!((p_services_pipe_type_map[pipe-1].location == ACI_STORE_REMOTE)&&
@@ -567,26 +474,26 @@ implementation
                   (p_services_pipe_type_map[pipe-1].pipe_type == ACI_RX_ACK_AUTO)||
                   (p_services_pipe_type_map[pipe-1].pipe_type == ACI_RX_ACK))))
     {
-      return false;
+      return FALSE;
     }
 
     
     {
 
-      is_request_operation_pending = true;
-      is_open_remote_pipe_pending = true;
+      is_request_operation_pending = TRUE;
+      is_open_remote_pipe_pending = TRUE;
       request_operation_pipe = pipe;
       aci_cmd_params_open_remote_pipe.pipe_number = pipe;
-      acil_encode_cmd_open_remote_pipe(&(msg_to_send.buffer[0]), &aci_cmd_params_open_remote_pipe);
-      ret_val = hal_aci_tl_send(&msg_to_send);
+      call acil.encode_cmd_open_remote_pipe(&(msg_to_send.buffer[0]), &aci_cmd_params_open_remote_pipe);
+      ret_val = call hal_aci_tl.send(&msg_to_send);
     }
     return ret_val;
   }
 
 
-  command bool lib_aci_close_remote_pipe(aci_state_t *aci_stat, uint8_t pipe)
+  command bool lib_aci.close_remote_pipe(aci_state_t *aci_stat, uint8_t pipe)
   {
-    bool ret_val = false;
+    bool ret_val = FALSE;
     aci_cmd_params_close_remote_pipe_t aci_cmd_params_close_remote_pipe;
 
     if((p_services_pipe_type_map[pipe-1].location == ACI_STORE_REMOTE)&&
@@ -594,39 +501,39 @@ implementation
            (p_services_pipe_type_map[pipe-1].pipe_type == ACI_RX_ACK_AUTO)||
            (p_services_pipe_type_map[pipe-1].pipe_type == ACI_RX_ACK)))
     {
-      return false;
+      return FALSE;
     }  
 
 
     {
 
-      is_request_operation_pending = true;
-      is_close_remote_pipe_pending = true;
+      is_request_operation_pending = TRUE;
+      is_close_remote_pipe_pending = TRUE;
       request_operation_pipe = pipe;
       aci_cmd_params_close_remote_pipe.pipe_number = pipe;
-      acil_encode_cmd_close_remote_pipe(&(msg_to_send.buffer[0]), &aci_cmd_params_close_remote_pipe);
-      ret_val = hal_aci_tl_send(&msg_to_send);
+      call acil.encode_cmd_close_remote_pipe(&(msg_to_send.buffer[0]), &aci_cmd_params_close_remote_pipe);
+      ret_val = call hal_aci_tl.send(&msg_to_send);
     }
     return ret_val;
   }
 
 
-  command bool lib_aci_set_key(aci_key_type_t key_rsp_type, uint8_t *key, uint8_t len)
+  command bool lib_aci.set_key(aci_key_type_t key_rsp_type, uint8_t *key, uint8_t len)
   {
     aci_cmd_params_set_key_t aci_cmd_params_set_key;
     aci_cmd_params_set_key.key_type = key_rsp_type;
     memcpy((uint8_t*)&(aci_cmd_params_set_key.key), key, len);
-    acil_encode_cmd_set_key(&(msg_to_send.buffer[0]), &aci_cmd_params_set_key);
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_set_key(&(msg_to_send.buffer[0]), &aci_cmd_params_set_key);
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci.lib_aci_echo_msg(uint8_t msg_size, uint8_t *p_msg_data)
+  command bool lib_aci.echo_msg(uint8_t msg_size, uint8_t *p_msg_data)
   {
     aci_cmd_params_echo_t aci_cmd_params_echo;
     if(msg_size > (ACI_ECHO_DATA_MAX_LEN))
     {
-      return false;
+      return FALSE;
     }
 
     if (msg_size > (ACI_ECHO_DATA_MAX_LEN))
@@ -635,34 +542,34 @@ implementation
     }
 
     memcpy(&(aci_cmd_params_echo.echo_data[0]), p_msg_data, msg_size);
-    acil_encode_cmd_echo_msg(&(msg_to_send.buffer[0]), &aci_cmd_params_echo, msg_size);
+    call acil.encode_cmd_echo_msg(&(msg_to_send.buffer[0]), &aci_cmd_params_echo, msg_size);
 
-    return hal_aci_tl_send(&msg_to_send);
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_bond_request()
+  command bool lib_aci.bond_request()
   {
-    acil_encode_cmd_bond_security_request(&(msg_to_send.buffer[0]));
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_bond_security_request(&(msg_to_send.buffer[0]));
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
-  command bool lib_aci_event_peek(hal_aci_evt_t *p_aci_evt_data)
+  command bool lib_aci.event_peek(hal_aci_evt_t *p_aci_evt_data)
   {
-    return hal_aci_tl_event_peek((hal_aci_data_t *)p_aci_evt_data);
+    return call hal_aci_tl.event_peek((hal_aci_data_t *)p_aci_evt_data);
   }
 
-  command bool lib_aci_event_get(aci_state_t *aci_stat, hal_aci_evt_t *p_aci_evt_data)
+  command bool lib_aci.event_get(aci_state_t *aci_stat, hal_aci_evt_t *p_aci_evt_data)
   {
-    bool status = false;
+    bool status = FALSE;
     
-    status = hal_aci_tl_event_get((hal_aci_data_t *)p_aci_evt_data);
+    status = call hal_aci_tl.event_get((hal_aci_data_t *)p_aci_evt_data);
     
     /**
     Update the state of the ACI with the 
     ACI Events -> Pipe Status, Disconnected, Connected, Bond Status, Pipe Error
     */
-    if (true == status)
+    if (TRUE == status)
     {
       aci_evt_t * aci_evt;
       
@@ -691,7 +598,7 @@ implementation
                     aci_stat->pipes_open_bitmap[i] = 0;
                     aci_stat->pipes_closed_bitmap[i] = 0;
                   }
-                  aci_stat->confirmation_pending = false;
+                  aci_stat->confirmation_pending = FALSE;
                   aci_stat->data_credit_available = aci_stat->data_credit_total;
                   
               }
@@ -717,54 +624,54 @@ implementation
   }
 
 
-  command bool lib_aci_send_ack(aci_state_t *aci_stat, const uint8_t pipe)
+  command bool lib_aci.send_ack(aci_state_t *aci_stat, const uint8_t pipe)
   {
-    bool ret_val = false;
+    bool ret_val = FALSE;
     {
-      acil_encode_cmd_send_data_ack(&(msg_to_send.buffer[0]), pipe);
+      call acil.encode_cmd_send_data_ack(&(msg_to_send.buffer[0]), pipe);
       
-      ret_val = hal_aci_tl_send(&msg_to_send);
+      ret_val = call hal_aci_tl.send(&msg_to_send);
     }
     return ret_val;
   }
 
 
-  command bool lib_aci_send_nack(aci_state_t *aci_stat, const uint8_t pipe, const uint8_t error_code)
+  command bool lib_aci.send_nack(aci_state_t *aci_stat, const uint8_t pipe, const uint8_t error_code)
   {
-    bool ret_val = false;
+    bool ret_val = FALSE;
     
     {
       
-      acil_encode_cmd_send_data_nack(&(msg_to_send.buffer[0]), pipe, error_code);
-      ret_val = hal_aci_tl_send(&msg_to_send);
+      call acil.encode_cmd_send_data_nack(&(msg_to_send.buffer[0]), pipe, error_code);
+      ret_val = call hal_aci_tl.send(&msg_to_send);
     }
     return ret_val;
   }
 
 
-  command bool lib_aci_broadcast(const uint16_t timeout, const uint16_t adv_interval)
+  command bool lib_aci.broadcast(const uint16_t timeout, const uint16_t adv_interval)
   {
     aci_cmd_params_broadcast_t aci_cmd_params_broadcast;
     if (timeout > 16383)
     {
-      return false;
+      return FALSE;
     }  
     
     // The adv_interval should be between 160 and 16384 (which translates to the advertisement 
     // interval values 100 ms and 10.24 s.
     if ((160 > adv_interval) || (adv_interval > 16384))
     {
-      return false;
+      return FALSE;
     }
 
     aci_cmd_params_broadcast.timeout = timeout;
     aci_cmd_params_broadcast.adv_interval = adv_interval;
-    acil_encode_cmd_broadcast(&(msg_to_send.buffer[0]), &aci_cmd_params_broadcast);
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_broadcast(&(msg_to_send.buffer[0]), &aci_cmd_params_broadcast);
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_open_adv_pipes(const uint8_t * const adv_service_data_pipes)
+  command bool lib_aci.open_adv_pipes(const uint8_t * const adv_service_data_pipes)
   {
     uint8_t i;
       
@@ -773,75 +680,75 @@ implementation
       aci_cmd_params_open_adv_pipe.pipes[i] = adv_service_data_pipes[i];
     }
 
-    acil_encode_cmd_open_adv_pipes(&(msg_to_send.buffer[0]), &aci_cmd_params_open_adv_pipe);
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_open_adv_pipes(&(msg_to_send.buffer[0]), &aci_cmd_params_open_adv_pipe);
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
-  command bool lib_aci_open_adv_pipe(const uint8_t pipe)
+  command bool lib_aci.open_adv_pipe(const uint8_t pipe)
   {
     uint8_t byte_idx = pipe / 8;
     
     aci_cmd_params_open_adv_pipe.pipes[byte_idx] |= (0x01 << (pipe % 8));
-    acil_encode_cmd_open_adv_pipes(&(msg_to_send.buffer[0]), &aci_cmd_params_open_adv_pipe);
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_open_adv_pipes(&(msg_to_send.buffer[0]), &aci_cmd_params_open_adv_pipe);
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_read_dynamic_data()
+  command bool lib_aci.read_dynamic_data()
   {
-    acil_encode_cmd_read_dynamic_data(&(msg_to_send.buffer[0]));
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_read_dynamic_data(&(msg_to_send.buffer[0]));
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
 
-  command bool lib_aci_write_dynamic_data(uint8_t sequence_number, uint8_t* dynamic_data, uint8_t length)
+  command bool lib_aci.write_dynamic_data(uint8_t sequence_number, uint8_t* dynamic_data, uint8_t length)
   {
-    acil_encode_cmd_write_dynamic_data(&(msg_to_send.buffer[0]), sequence_number, dynamic_data, length);
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_write_dynamic_data(&(msg_to_send.buffer[0]), sequence_number, dynamic_data, length);
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
-  command bool lib_aci_dtm_command(uint8_t dtm_command_msbyte, uint8_t dtm_command_lsbyte)
+  command bool lib_aci.dtm_command(uint8_t dtm_command_msbyte, uint8_t dtm_command_lsbyte)
   {
     aci_cmd_params_dtm_cmd_t aci_cmd_params_dtm_cmd;
     aci_cmd_params_dtm_cmd.cmd_msb = dtm_command_msbyte;
     aci_cmd_params_dtm_cmd.cmd_lsb = dtm_command_lsbyte;
-    acil_encode_cmd_dtm_cmd(&(msg_to_send.buffer[0]), &aci_cmd_params_dtm_cmd);
-    return hal_aci_tl_send(&msg_to_send);
+    call acil.encode_cmd_dtm_cmd(&(msg_to_send.buffer[0]), &aci_cmd_params_dtm_cmd);
+    return call hal_aci_tl.send(&msg_to_send);
   }
 
-  command void lib_aci_flush(void)
+  command void lib_aci.flush(void)
   {
-    hal_aci_tl_q_flush();
+    call hal_aci_tl.q_flush();
   }
 
-  command void lib_aci_debug_print(bool enable)
+  command void lib_aci.debug_print(bool enable)
   {
-    hal_aci_tl_debug_print(enable);
+    call hal_aci_tl.debug_print(enable);
 
   }
 
-  command void lib_aci_pin_reset(void)
+  command void lib_aci.pin_reset(void)
   {
-      hal_aci_tl_pin_reset();
+      call hal_aci_tl.pin_reset();
   }
 
-  inline bool lib_aci_event_queue_empty(void)
+  command bool lib_aci.event_queue_empty(void)
   {
-    return hal_aci_tl_rx_q_empty();
+    return call hal_aci_tl.rx_q_empty();
   }
 
-  command bool lib_aci_event_queue_full(void)
+  command bool lib_aci.event_queue_full(void)
   {
-    return hal_aci_tl_rx_q_full();
+    return call hal_aci_tl.rx_q_full();
   }
 
-  command bool lib_aci.lib_aci_command_queue_empty(void)
+  command bool lib_aci.command_queue_empty(void)
   {
-    return hal_aci_tl_tx_q_empty();
+    return call hal_aci_tl.tx_q_empty();
   }
 
-  command bool lib_aci_command_queue_full(void)
+  command bool lib_aci.command_queue_full(void)
   {
-    return hal_aci_tl_tx_q_full();
+    return call hal_aci_tl.tx_q_full();
   }
 }

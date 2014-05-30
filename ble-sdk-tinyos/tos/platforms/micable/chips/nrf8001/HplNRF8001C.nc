@@ -1,4 +1,4 @@
-configuration HplNRF8001PinsC {
+configuration HplNRF8001C {
   provides {
   	interface Resource as SpiResource;
   	interface FastSpiByte;
@@ -6,6 +6,7 @@ configuration HplNRF8001PinsC {
     interface GeneralIO as ACTIVE;
     interface GeneralIO as RESET;
     interface GeneralIO as REQN;
+    interface GeneralIO as RDYN;
 
     interface Init; //as of 5/20 I have no idea what this does
 

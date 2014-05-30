@@ -27,6 +27,7 @@
 */
 
 //Board dependent defines
+/*
 #if defined (__AVR__)
     //For Arduino this AVR specific library has to be used for reading from Flash memory
     #include <avr/pgmspace.h>
@@ -72,5 +73,6 @@
 	//Redefine the function for reading from flash in ChipKit
 	#define memcpy_P        memcpy
 #endif
+*/
 
 #endif /* PLATFORM_H__ */
