@@ -1,0 +1,4 @@
+<map id="acil_encode_cmd_write_dynamic_data" name="acil_encode_cmd_write_dynamic_data">
+<area shape="rect" id="node2" href="$acilib__if_8h.html#a68031608736636b07a9fc06b9425397f" title="Encode the ACI message. " alt="" coords="233,5,352,32"/>
+<area shape="rect" id="node3" href="$group__lib__aci.html#gaaf1b3b7c6c3b706188db595ddb1596f5" title="Sends WriteDynamicData command to the host. " alt="" coords="204,56,381,83"/>
+</map>

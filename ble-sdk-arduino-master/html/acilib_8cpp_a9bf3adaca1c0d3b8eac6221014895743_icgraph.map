@@ -1,0 +1,4 @@
+<map id="acil_encode_cmd_request_data" name="acil_encode_cmd_request_data">
+<area shape="rect" id="node2" href="$acilib__if_8h.html#a68031608736636b07a9fc06b9425397f" title="Encode the ACI message. " alt="" coords="262,5,381,32"/>
+<area shape="rect" id="node3" href="$group__lib__aci.html#gace442bd2436f181f57c4e83cb553e6a0" title="Requests data from a given pipe. " alt="" coords="252,56,391,83"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="acil_encode_cmd_sleep" name="acil_encode_cmd_sleep">
+<area shape="rect" id="node2" href="$acilib__if_8h.html#a68031608736636b07a9fc06b9425397f" title="Encode the ACI message. " alt="" coords="209,5,328,32"/>
+<area shape="rect" id="node3" href="$group__lib__aci.html#ga0407fdf9e39b255eff02757c69bf84c1" title="Sets the radio in sleep mode. " alt="" coords="221,56,316,83"/>
+</map>

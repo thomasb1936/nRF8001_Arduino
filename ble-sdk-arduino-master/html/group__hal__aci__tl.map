@@ -1,0 +1,4 @@
+<map id="hal_aci_tl" name="hal_aci_tl">
+<area shape="rect" id="node1" href="$group__aci.html" title="Definitions for the ACI (Application Control Interface) " alt="" coords="220,5,259,32"/>
+<area shape="rect" id="node2" href="$group__lib__aci.html" title="Library for the logical part of the Application Controller Interface (ACI) " alt="" coords="208,56,271,83"/>
+</map>

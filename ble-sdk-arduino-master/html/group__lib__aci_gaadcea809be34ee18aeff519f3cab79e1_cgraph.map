@@ -1,0 +1,8 @@
+<map id="lib_aci_read_dynamic_data" name="lib_aci_read_dynamic_data">
+<area shape="rect" id="node2" href="$acilib_8cpp.html#a9256b92e75602c0687e8b3891e55501b" title="Encode the ACI message to read dynamic data. " alt="" coords="229,15,380,57"/>
+<area shape="rect" id="node3" href="$group__hal__aci__tl.html#gac1d6ec6add37bfd195db5da15af49b17" title="Sends an ACI command to the radio. " alt="" coords="250,81,359,108"/>
+<area shape="rect" id="node4" href="$group__aci__queue.html#gaca9603d62427ad7e1f75f3b3a15c4bf0" title="aci_queue_enqueue" alt="" coords="428,5,564,32"/>
+<area shape="rect" id="node5" href="$group__aci__queue.html#ga219223013fba26ae499363281ea975f0" title="aci_queue_is_full" alt="" coords="612,31,729,57"/>
+<area shape="rect" id="node6" href="$hal__aci__tl_8cpp.html#a41c0be0f98fbd1427b79381a39b4b2a6" title="m_aci_reqn_enable" alt="" coords="430,107,562,133"/>
+<area shape="rect" id="node7" href="$hal__aci__tl_8cpp.html#a151e0dd5c37fc07fb8026cc81abfad67" title="m_aci_data_print" alt="" coords="437,157,555,184"/>
+</map>

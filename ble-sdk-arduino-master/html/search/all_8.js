@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['hal_5faci_5fmax_5flength',['HAL_ACI_MAX_LENGTH',['../group__hal__aci__tl.html#ga3c61e74cfbf6dba38d5421637a0cacdf',1,'hal_aci_tl.h']]],
+  ['hal_5faci_5ftl',['hal_aci_tl',['../group__hal__aci__tl.html',1,'']]],
+  ['hal_5faci_5ftl_2ecpp',['hal_aci_tl.cpp',['../hal__aci__tl_8cpp.html',1,'']]],
+  ['hal_5faci_5ftl_2eh',['hal_aci_tl.h',['../hal__aci__tl_8h.html',1,'']]],
+  ['hal_5faci_5ftl_5fdebug_5fprint',['hal_aci_tl_debug_print',['../group__hal__aci__tl.html#ga085b24b6834aff899c390bdf65866123',1,'hal_aci_tl_debug_print(bool enable):&#160;hal_aci_tl.cpp'],['../group__hal__aci__tl.html#ga085b24b6834aff899c390bdf65866123',1,'hal_aci_tl_debug_print(bool enable):&#160;hal_aci_tl.cpp']]],
+  ['hal_5faci_5ftl_5fevent_5fget',['hal_aci_tl_event_get',['../group__hal__aci__tl.html#ga06bd760f052b6437d7f3e31872b08a5b',1,'hal_aci_tl_event_get(hal_aci_data_t *p_aci_data):&#160;hal_aci_tl.cpp'],['../group__hal__aci__tl.html#ga06bd760f052b6437d7f3e31872b08a5b',1,'hal_aci_tl_event_get(hal_aci_data_t *p_aci_data):&#160;hal_aci_tl.cpp']]],
+  ['hal_5faci_5ftl_5fevent_5fpeek',['hal_aci_tl_event_peek',['../group__hal__aci__tl.html#gaf0c69bb99ba4f132d89e12b23976b645',1,'hal_aci_tl_event_peek(hal_aci_data_t *p_aci_data):&#160;hal_aci_tl.cpp'],['../group__hal__aci__tl.html#gaf0c69bb99ba4f132d89e12b23976b645',1,'hal_aci_tl_event_peek(hal_aci_data_t *p_aci_data):&#160;hal_aci_tl.cpp']]],
+  ['hal_5faci_5ftl_5finit',['hal_aci_tl_init',['../group__hal__aci__tl.html#ga01d2ea955f548ece67b78639f2b7eea3',1,'hal_aci_tl_init(aci_pins_t *a_pins, bool debug):&#160;hal_aci_tl.cpp'],['../group__hal__aci__tl.html#ga01d2ea955f548ece67b78639f2b7eea3',1,'hal_aci_tl_init(aci_pins_t *a_pins, bool debug):&#160;hal_aci_tl.cpp']]],
+  ['hal_5faci_5ftl_5fpin_5freset',['hal_aci_tl_pin_reset',['../group__hal__aci__tl.html#ga45c7b7d71b6d48fcab299f9bcab11836',1,'hal_aci_tl_pin_reset(void):&#160;hal_aci_tl.cpp'],['../group__hal__aci__tl.html#ga45c7b7d71b6d48fcab299f9bcab11836',1,'hal_aci_tl_pin_reset(void):&#160;hal_aci_tl.cpp']]],
+  ['hal_5faci_5ftl_5fpoll_5fget',['hal_aci_tl_poll_get',['../group__hal__aci__tl.html#gabf2137e1e5149759792cd06379dc3dfa',1,'hal_aci_tl.h']]],
+  ['hal_5faci_5ftl_5fq_5fflush',['hal_aci_tl_q_flush',['../group__hal__aci__tl.html#ga6a44bb870430249643b1ce613f2d4c13',1,'hal_aci_tl_q_flush(void):&#160;hal_aci_tl.cpp'],['../group__hal__aci__tl.html#ga6a44bb870430249643b1ce613f2d4c13',1,'hal_aci_tl_q_flush(void):&#160;hal_aci_tl.cpp']]],
+  ['hal_5faci_5ftl_5frx_5fq_5fempty',['hal_aci_tl_rx_q_empty',['../group__hal__aci__tl.html#ga25997fb187e7f2d69175238b5321798c',1,'hal_aci_tl_rx_q_empty(void):&#160;hal_aci_tl.cpp'],['../group__hal__aci__tl.html#ga25997fb187e7f2d69175238b5321798c',1,'hal_aci_tl_rx_q_empty(void):&#160;hal_aci_tl.cpp']]],
+  ['hal_5faci_5ftl_5frx_5fq_5ffull',['hal_aci_tl_rx_q_full',['../group__hal__aci__tl.html#ga67cd689af79fe313803334b10992cef6',1,'hal_aci_tl_rx_q_full(void):&#160;hal_aci_tl.cpp'],['../group__hal__aci__tl.html#ga67cd689af79fe313803334b10992cef6',1,'hal_aci_tl_rx_q_full(void):&#160;hal_aci_tl.cpp']]],
+  ['hal_5faci_5ftl_5fsend',['hal_aci_tl_send',['../group__hal__aci__tl.html#gac1d6ec6add37bfd195db5da15af49b17',1,'hal_aci_tl_send(hal_aci_data_t *p_aci_cmd):&#160;hal_aci_tl.cpp'],['../group__hal__aci__tl.html#gac1d6ec6add37bfd195db5da15af49b17',1,'hal_aci_tl_send(hal_aci_data_t *aci_buffer):&#160;hal_aci_tl.cpp']]],
+  ['hal_5faci_5ftl_5ftx_5fq_5fempty',['hal_aci_tl_tx_q_empty',['../group__hal__aci__tl.html#ga007e10de93fab710beb737ba031eab7a',1,'hal_aci_tl_tx_q_empty(void):&#160;hal_aci_tl.cpp'],['../group__hal__aci__tl.html#ga007e10de93fab710beb737ba031eab7a',1,'hal_aci_tl_tx_q_empty(void):&#160;hal_aci_tl.cpp']]],
+  ['hal_5faci_5ftl_5ftx_5fq_5ffull',['hal_aci_tl_tx_q_full',['../group__hal__aci__tl.html#ga371498fc363cc1aab8f22bcc97d82c87',1,'hal_aci_tl_tx_q_full(void):&#160;hal_aci_tl.cpp'],['../group__hal__aci__tl.html#ga371498fc363cc1aab8f22bcc97d82c87',1,'hal_aci_tl_tx_q_full(void):&#160;hal_aci_tl.cpp']]],
+  ['hal_5fplatform_2eh',['hal_platform.h',['../hal__platform_8h.html',1,'']]],
+  ['head',['head',['../structaci__queue__t.html#a2435237bcd1c3d81e15d56431d2ebe46',1,'aci_queue_t']]],
+  ['hw_5ferror',['hw_error',['../struct__aci__packed__.html#ae9b9c5a8be85396319ec0af20fd3b418',1,'_aci_packed_::hw_error()'],['../struct__aci__packed__.html#ab01764381d597819753d62aa776e474f',1,'_aci_packed_::hw_error()']]]
+];

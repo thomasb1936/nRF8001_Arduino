@@ -1,0 +1,4 @@
+<map id="lib_aci_command_queue_empty" name="lib_aci_command_queue_empty">
+<area shape="rect" id="node2" href="$group__hal__aci__tl.html#ga007e10de93fab710beb737ba031eab7a" title="Return empty status of transmit queue. " alt="" coords="215,13,361,39"/>
+<area shape="rect" id="node3" href="$group__aci__queue.html#ga59953d6fc43d0d95867cfadc6cd1f310" title="aci_queue_is_empty" alt="" coords="409,13,548,39"/>
+</map>

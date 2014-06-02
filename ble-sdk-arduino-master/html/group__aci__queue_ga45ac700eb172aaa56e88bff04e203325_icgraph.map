@@ -1,0 +1,16 @@
+<map id="aci_queue_dequeue_from_isr" name="aci_queue_dequeue_from_isr">
+<area shape="rect" id="node2" href="$hal__aci__tl_8cpp.html#a7d0eeb43e696520b1dbfd3e6ca868f1c" title="m_aci_isr" alt="" coords="239,102,313,129"/>
+<area shape="rect" id="node3" href="$group__hal__aci__tl.html#ga06bd760f052b6437d7f3e31872b08a5b" title="Get an ACI event from the event queue. " alt="" coords="361,77,497,103"/>
+<area shape="rect" id="node12" href="$group__hal__aci__tl.html#ga01d2ea955f548ece67b78639f2b7eea3" title="ACI Transport Layer initialization. " alt="" coords="1273,127,1368,154"/>
+<area shape="rect" id="node4" href="$group__lib__aci.html#ga4202742fad8317b1b8426d29c0a6ed6b" title="Gets an ACI event from the ACI Event Queue. " alt="" coords="545,77,664,103"/>
+<area shape="rect" id="node5" href="$aci__setup_8h.html#a88c9660938f69ca72f79482f720caccd" title="Setup the nRF8001 device. " alt="" coords="712,26,811,53"/>
+<area shape="rect" id="node6" href="$group__ble__uart__project__template.html#ga3dec42e9844b78906a9079baf32872ef" title="aci_loop" alt="" coords="883,26,953,53"/>
+<area shape="rect" id="node15" href="$lib__aci_8cpp.html#ad491f33190ddc3c971e52c64473d3c24" title="lib_aci_board_init" alt="" coords="859,77,977,103"/>
+<area shape="rect" id="node7" href="$group__ble__uart__project__template.html#gafe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="1025,26,1072,53"/>
+<area shape="rect" id="node8" href="$group__aci__queue.html#ga6133b3a7bd7e8e4c44b0b7d56ce6b6d3" title="aci_queue_init" alt="" coords="1120,26,1221,53"/>
+<area shape="rect" id="node9" href="$hal__aci__tl_8cpp.html#aaf96bf13e542fc6838f6050a4aa4a60f" title="m_aci_q_flush" alt="" coords="1269,26,1372,53"/>
+<area shape="rect" id="node10" href="$group__hal__aci__tl.html#ga6a44bb870430249643b1ce613f2d4c13" title="Flush the ACI command Queue and the ACI Event Queue. " alt="" coords="1420,26,1541,53"/>
+<area shape="rect" id="node11" href="$group__lib__aci.html#gad5bb15ec779036b7f5b184776e7603a6" title="Flushes the events in the ACI command queues and ACI Event queue. " alt="" coords="1589,26,1680,53"/>
+<area shape="rect" id="node13" href="$group__lib__aci.html#ga4c778b64f787e39679943846c1c66fa0" title="Initialization function. " alt="" coords="1441,102,1520,129"/>
+<area shape="rect" id="node14" href="$group__ble__uart__project__template.html#ga7dfd9b79bc5a37d7df40207afbc5431f" title="setup" alt="" coords="1607,102,1662,129"/>
+</map>

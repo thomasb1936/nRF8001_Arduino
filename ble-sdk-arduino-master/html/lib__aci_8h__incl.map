@@ -1,0 +1,9 @@
+<map id="lib_aci.h" name="lib_aci.h">
+<area shape="rect" id="node2" href="$hal__platform_8h.html" title="hal_platform.h" alt="" coords="5,229,105,256"/>
+<area shape="rect" id="node3" href="$hal__aci__tl_8h.html" title="Interface for hal_aci_tl. " alt="" coords="93,155,177,181"/>
+<area shape="rect" id="node4" href="$aci_8h.html" title="aci.h" alt="" coords="271,229,319,256"/>
+<area shape="rect" id="node6" href="$aci__queue_8h.html" title="Interface for buffer. " alt="" coords="167,80,258,107"/>
+<area shape="rect" id="node7" href="$aci__cmds_8h.html" title="Definitions for the ACI (Application Control Interface) commands. " alt="" coords="253,155,338,181"/>
+<area shape="rect" id="node8" href="$aci__evts_8h.html" title="Definitions for the ACI (Application Control Interface) events. " alt="" coords="333,80,412,107"/>
+<area shape="rect" id="node5" href="$boards_8h.html" title="Defines for the different Bluetooth low energy boards. " alt="" coords="130,229,202,256"/>
+</map>

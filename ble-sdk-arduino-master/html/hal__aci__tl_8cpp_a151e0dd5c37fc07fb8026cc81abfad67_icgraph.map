@@ -1,0 +1,51 @@
+<map id="m_aci_data_print" name="m_aci_data_print">
+<area shape="rect" id="node2" href="$group__hal__aci__tl.html#ga06bd760f052b6437d7f3e31872b08a5b" title="Get an ACI event from the event queue. " alt="" coords="172,411,308,437"/>
+<area shape="rect" id="node15" href="$group__hal__aci__tl.html#gac1d6ec6add37bfd195db5da15af49b17" title="Sends an ACI command to the radio. " alt="" coords="185,841,295,868"/>
+<area shape="rect" id="node3" href="$group__lib__aci.html#ga4202742fad8317b1b8426d29c0a6ed6b" title="Gets an ACI event from the ACI Event Queue. " alt="" coords="385,56,504,83"/>
+<area shape="rect" id="node4" href="$aci__setup_8h.html#a88c9660938f69ca72f79482f720caccd" title="Setup the nRF8001 device. " alt="" coords="605,132,704,159"/>
+<area shape="rect" id="node5" href="$group__ble__uart__project__template.html#ga3dec42e9844b78906a9079baf32872ef" title="aci_loop" alt="" coords="776,583,845,609"/>
+<area shape="rect" id="node14" href="$lib__aci_8cpp.html#ad491f33190ddc3c971e52c64473d3c24" title="lib_aci_board_init" alt="" coords="595,31,714,57"/>
+<area shape="rect" id="node6" href="$group__ble__uart__project__template.html#gafe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="893,583,940,609"/>
+<area shape="rect" id="node7" href="$group__aci__queue.html#ga6133b3a7bd7e8e4c44b0b7d56ce6b6d3" title="aci_queue_init" alt="" coords="988,343,1089,369"/>
+<area shape="rect" id="node8" href="$hal__aci__tl_8cpp.html#aaf96bf13e542fc6838f6050a4aa4a60f" title="m_aci_q_flush" alt="" coords="1137,343,1240,369"/>
+<area shape="rect" id="node11" href="$group__hal__aci__tl.html#ga01d2ea955f548ece67b78639f2b7eea3" title="ACI Transport Layer initialization. " alt="" coords="1141,232,1236,259"/>
+<area shape="rect" id="node9" href="$group__hal__aci__tl.html#ga6a44bb870430249643b1ce613f2d4c13" title="Flush the ACI command Queue and the ACI Event Queue. " alt="" coords="1288,343,1409,369"/>
+<area shape="rect" id="node10" href="$group__lib__aci.html#gad5bb15ec779036b7f5b184776e7603a6" title="Flushes the events in the ACI command queues and ACI Event queue. " alt="" coords="1457,343,1548,369"/>
+<area shape="rect" id="node12" href="$group__lib__aci.html#ga4c778b64f787e39679943846c1c66fa0" title="Initialization function. " alt="" coords="1309,232,1388,259"/>
+<area shape="rect" id="node13" href="$group__ble__uart__project__template.html#ga7dfd9b79bc5a37d7df40207afbc5431f" title="setup" alt="" coords="1475,232,1530,259"/>
+<area shape="rect" id="node16" href="$aci__setup_8cpp.html#a279666eb675e431cb2cd461e9ab1a848" title="aci_setup_fill" alt="" coords="398,107,491,133"/>
+<area shape="rect" id="node17" href="$group__lib__aci.html#ga3bc93548ca991323f3dfe08f770c3a8f" title="Sets a given application latency. " alt="" coords="365,259,524,285"/>
+<area shape="rect" id="node18" href="$group__lib__aci.html#ga384395edcc59d8eb842ae952dbb45c77" title="Sets the radio in test mode. " alt="" coords="403,309,487,336"/>
+<area shape="rect" id="node19" href="$group__lib__aci.html#ga0407fdf9e39b255eff02757c69bf84c1" title="Sets the radio in sleep mode. " alt="" coords="397,360,492,387"/>
+<area shape="rect" id="node20" href="$group__lib__aci.html#ga35d3abfacf6363903523395c78d0d407" title="Resets the radio. " alt="" coords="382,5,507,32"/>
+<area shape="rect" id="node21" href="$group__lib__aci.html#ga2d9945d03ebe545593fd9aaff620d180" title="Radio starts directed advertising to bonded device. " alt="" coords="373,411,516,437"/>
+<area shape="rect" id="node22" href="$group__lib__aci.html#ga522754bcafa416007b2c83dffb80dde0" title="Gets the radio&#39;s version. " alt="" coords="581,692,728,719"/>
+<area shape="rect" id="node23" href="$group__lib__aci.html#gad1958b151a27947fdf209111cb205e48" title="Sets Local Data. " alt="" coords="581,781,728,808"/>
+<area shape="rect" id="node24" href="$group__lib__aci.html#ga76975038ef22824d265af381408ffa9c" title="Tries to connect to a peer device. " alt="" coords="601,475,708,501"/>
+<area shape="rect" id="node25" href="$group__lib__aci.html#gac1a6a32e068a660a1ad4519dafe8bdca" title="Disconnects from peer device. " alt="" coords="383,512,506,539"/>
+<area shape="rect" id="node27" href="$group__lib__aci.html#ga01b197c5fbaa53df2081c56d4b0d6e52" title="Tries to bond with a peer device. " alt="" coords="398,664,491,691"/>
+<area shape="rect" id="node28" href="$group__lib__aci.html#ga6526a386edbe5536125886436f0404f7" title="Wakes up the radio. " alt="" coords="389,715,500,741"/>
+<area shape="rect" id="node29" href="$group__lib__aci.html#gae0d03ec51342482f5c5909b469389e01" title="Sets the radio&#39;s TX power. " alt="" coords="374,765,515,792"/>
+<area shape="rect" id="node30" href="$group__lib__aci.html#gaffd6b670ea7583b27eb78d017ad16a50" title="Gets the device address. " alt="" coords="377,816,512,843"/>
+<area shape="rect" id="node31" href="$group__lib__aci.html#ga336665c54843645bc5f23d67fdc682ad" title="Gets the temperature. " alt="" coords="367,867,522,893"/>
+<area shape="rect" id="node32" href="$group__lib__aci.html#ga3f01df3fe8924bc96ffe9d10fe5395eb" title="Gets the battery level. " alt="" coords="381,918,508,959"/>
+<area shape="rect" id="node33" href="$group__lib__aci.html#gaf6418c6bf63163a90b94b9722a1b5e69" title="Sends data on a given pipe. " alt="" coords="382,1136,507,1163"/>
+<area shape="rect" id="node35" href="$group__lib__aci.html#gace442bd2436f181f57c4e83cb553e6a0" title="Requests data from a given pipe. " alt="" coords="375,1035,514,1061"/>
+<area shape="rect" id="node36" href="$group__lib__aci.html#ga370651f7f4651ca2e0f3d22015ab8aff" title="Sends a L2CAP change connection parameters request. " alt="" coords="373,563,517,589"/>
+<area shape="rect" id="node37" href="$group__lib__aci.html#ga6fcf57ab6f100c5a51d4e6f6fea28a11" title="Sends a L2CAP change connection parameters request with the connection predefined preffered connectio..." alt="" coords="583,606,727,647"/>
+<area shape="rect" id="node38" href="$group__lib__aci.html#ga5954c28e79ef13cb5c406d64dbfd7a7d" title="Opens a remote pipe. " alt="" coords="360,1187,529,1213"/>
+<area shape="rect" id="node39" href="$group__lib__aci.html#gac13729b871153ec45d7a17913aed892f" title="Closes a remote pipe. " alt="" coords="360,1237,529,1264"/>
+<area shape="rect" id="node40" href="$group__lib__aci.html#gab882db36cb702eb908eedd282aa26aac" title="Set the key requested by the 8001. " alt="" coords="391,1288,499,1315"/>
+<area shape="rect" id="node41" href="$group__lib__aci.html#gafdcdccae51c9a5c20576584b4be903db" title="Sends an echo message. " alt="" coords="383,1339,506,1365"/>
+<area shape="rect" id="node42" href="$group__lib__aci.html#ga7f1cd7247de5cef3c370093cf27a4c10" title="Sends a SMP Security Request. " alt="" coords="374,1389,515,1416"/>
+<area shape="rect" id="node43" href="$group__lib__aci.html#gac83a889a26a0c6925636842dd403ccfb" title="Sends acknowledgement message to peer. " alt="" coords="385,1440,504,1467"/>
+<area shape="rect" id="node44" href="$group__lib__aci.html#ga2dbcae5e4a77299b89008d04bb6d669f" title="Sends negative acknowledgement message to peer. " alt="" coords="381,1491,508,1517"/>
+<area shape="rect" id="node45" href="$group__lib__aci.html#ga3d22a091fcdf486bcfacd1db27ff0d14" title="Sends Broadcast message to the radio. " alt="" coords="384,1541,505,1568"/>
+<area shape="rect" id="node46" href="$group__lib__aci.html#ga68931b6db3b05d475613c7c78b8a2cd9" title="Sends a command to the radio to set the pipes to be placed in Advertisement Service Data..." alt="" coords="364,1592,525,1619"/>
+<area shape="rect" id="node47" href="$group__lib__aci.html#ga006c2e54194beff2c49b82b62ca56b93" title="Sends a command to the radio to set the input pipe to be placed in Advertisement Service Data..." alt="" coords="367,1643,522,1669"/>
+<area shape="rect" id="node48" href="$group__lib__aci.html#gaadcea809be34ee18aeff519f3cab79e1" title="Sends ReadDynamicData command to the host. " alt="" coords="357,1693,533,1720"/>
+<area shape="rect" id="node49" href="$group__lib__aci.html#gaaf1b3b7c6c3b706188db595ddb1596f5" title="Sends WriteDynamicData command to the host. " alt="" coords="356,157,533,184"/>
+<area shape="rect" id="node50" href="$group__lib__aci.html#ga77bd9b11867421232ff9247dfa7894cb" title="Sends an DTM command. " alt="" coords="371,208,518,235"/>
+<area shape="rect" id="node26" href="$group__ble__uart__project__template.html#ga12a47ead7867ad8c712aed8f173feb52" title="uart_process_control\l_point_rx" alt="" coords="586,541,723,582"/>
+<area shape="rect" id="node34" href="$group__ble__uart__project__template.html#ga5c6ff3c2c605c54701709326f584e1e7" title="uart_tx" alt="" coords="625,909,685,936"/>
+</map>

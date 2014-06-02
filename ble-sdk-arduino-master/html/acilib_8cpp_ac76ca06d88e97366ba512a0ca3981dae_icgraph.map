@@ -1,0 +1,4 @@
+<map id="acil_encode_cmd_bond" name="acil_encode_cmd_bond">
+<area shape="rect" id="node2" href="$acilib__if_8h.html#a68031608736636b07a9fc06b9425397f" title="Encode the ACI message. " alt="" coords="208,5,327,32"/>
+<area shape="rect" id="node3" href="$group__lib__aci.html#ga01b197c5fbaa53df2081c56d4b0d6e52" title="Tries to bond with a peer device. " alt="" coords="221,56,314,83"/>
+</map>

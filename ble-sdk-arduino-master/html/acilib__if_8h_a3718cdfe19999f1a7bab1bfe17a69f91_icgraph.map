@@ -1,0 +1,4 @@
+<map id="acil_encode_cmd_echo_msg" name="acil_encode_cmd_echo_msg">
+<area shape="rect" id="node2" href="$acilib__if_8h.html#a68031608736636b07a9fc06b9425397f" title="Encode the ACI message. " alt="" coords="238,5,357,32"/>
+<area shape="rect" id="node3" href="$group__lib__aci.html#gafdcdccae51c9a5c20576584b4be903db" title="Sends an echo message. " alt="" coords="236,56,359,83"/>
+</map>

@@ -1,0 +1,12 @@
+<map id="lib_aci_command_queue_empty" name="lib_aci_command_queue_empty">
+<area shape="rect" id="node2" href="$aci__setup_8h.html#a88c9660938f69ca72f79482f720caccd" title="Setup the nRF8001 device. " alt="" coords="215,31,313,57"/>
+<area shape="rect" id="node3" href="$group__ble__uart__project__template.html#ga3dec42e9844b78906a9079baf32872ef" title="aci_loop" alt="" coords="361,31,431,57"/>
+<area shape="rect" id="node4" href="$group__ble__uart__project__template.html#gafe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="479,31,525,57"/>
+<area shape="rect" id="node5" href="$group__aci__queue.html#ga6133b3a7bd7e8e4c44b0b7d56ce6b6d3" title="aci_queue_init" alt="" coords="573,31,675,57"/>
+<area shape="rect" id="node6" href="$hal__aci__tl_8cpp.html#aaf96bf13e542fc6838f6050a4aa4a60f" title="m_aci_q_flush" alt="" coords="723,5,825,32"/>
+<area shape="rect" id="node9" href="$group__hal__aci__tl.html#ga01d2ea955f548ece67b78639f2b7eea3" title="ACI Transport Layer initialization. " alt="" coords="727,56,821,83"/>
+<area shape="rect" id="node7" href="$group__hal__aci__tl.html#ga6a44bb870430249643b1ce613f2d4c13" title="Flush the ACI command Queue and the ACI Event Queue. " alt="" coords="873,5,995,32"/>
+<area shape="rect" id="node8" href="$group__lib__aci.html#gad5bb15ec779036b7f5b184776e7603a6" title="Flushes the events in the ACI command queues and ACI Event queue. " alt="" coords="1043,5,1133,32"/>
+<area shape="rect" id="node10" href="$group__lib__aci.html#ga4c778b64f787e39679943846c1c66fa0" title="Initialization function. " alt="" coords="895,56,973,83"/>
+<area shape="rect" id="node11" href="$group__ble__uart__project__template.html#ga7dfd9b79bc5a37d7df40207afbc5431f" title="setup" alt="" coords="1061,56,1115,83"/>
+</map>

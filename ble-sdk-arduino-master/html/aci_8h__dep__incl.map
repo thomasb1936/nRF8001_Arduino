@@ -1,0 +1,15 @@
+<map id="aci.h" name="aci.h">
+<area shape="rect" id="node2" href="$aci__cmds_8h.html" title="Definitions for the ACI (Application Control Interface) commands. " alt="" coords="136,155,221,181"/>
+<area shape="rect" id="node3" href="$lib__aci_8h.html" title="ACI library. " alt="" coords="220,229,286,256"/>
+<area shape="rect" id="node6" href="$lib__aci_8cpp.html" title="Implementation of the ACI library. " alt="" coords="138,304,221,331"/>
+<area shape="rect" id="node7" href="$acilib_8cpp.html" title="Implementation of the acilib module. " alt="" coords="68,229,142,256"/>
+<area shape="rect" id="node8" href="$aci__evts_8h.html" title="Definitions for the ACI (Application Control Interface) events. " alt="" coords="32,155,111,181"/>
+<area shape="rect" id="node9" href="$hal__aci__tl_8h.html" title="Interface for hal_aci_tl. " alt="" coords="318,80,402,107"/>
+<area shape="rect" id="node11" href="$aci__queue_8h.html" title="Interface for buffer. " alt="" coords="448,155,538,181"/>
+<area shape="rect" id="node13" href="$services_8h.html" title="services.h" alt="" coords="478,80,556,107"/>
+<area shape="rect" id="node14" href="$services__lock_8h.html" title="services_lock.h" alt="" coords="581,80,688,107"/>
+<area shape="rect" id="node4" href="$aci__setup_8cpp.html" title="aci_setup.cpp" alt="" coords="246,304,348,331"/>
+<area shape="rect" id="node5" href="$ble___a___hello___world___program_8cpp.html" title="ble_A_Hello_World_Program.cpp" alt="" coords="474,304,680,331"/>
+<area shape="rect" id="node10" href="$aci__queue_8cpp.html" title="Implementation of a circular queue for ACI data. " alt="" coords="535,229,640,256"/>
+<area shape="rect" id="node12" href="$hal__aci__tl_8cpp.html" title="Implementation of the ACI transport layer module. " alt="" coords="361,229,460,256"/>
+</map>

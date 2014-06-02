@@ -1,0 +1,4 @@
+<map id="acil_encode_cmd_wakeup" name="acil_encode_cmd_wakeup">
+<area shape="rect" id="node2" href="$acilib__if_8h.html#a68031608736636b07a9fc06b9425397f" title="Encode the ACI message. " alt="" coords="225,5,344,32"/>
+<area shape="rect" id="node3" href="$group__lib__aci.html#ga6526a386edbe5536125886436f0404f7" title="Wakes up the radio. " alt="" coords="229,56,340,83"/>
+</map>

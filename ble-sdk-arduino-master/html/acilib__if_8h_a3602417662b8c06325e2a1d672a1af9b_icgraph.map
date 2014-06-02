@@ -1,0 +1,4 @@
+<map id="acil_encode_cmd_battery_level" name="acil_encode_cmd_battery_level">
+<area shape="rect" id="node2" href="$acilib__if_8h.html#a68031608736636b07a9fc06b9425397f" title="Encode the ACI message. " alt="" coords="221,5,340,32"/>
+<area shape="rect" id="node3" href="$group__lib__aci.html#ga3f01df3fe8924bc96ffe9d10fe5395eb" title="Gets the battery level. " alt="" coords="217,57,344,98"/>
+</map>

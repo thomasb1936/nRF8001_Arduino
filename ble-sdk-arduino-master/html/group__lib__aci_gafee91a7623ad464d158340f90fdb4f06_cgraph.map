@@ -1,0 +1,4 @@
+<map id="lib_aci_event_queue_empty" name="lib_aci_event_queue_empty">
+<area shape="rect" id="node2" href="$group__hal__aci__tl.html#ga25997fb187e7f2d69175238b5321798c" title="Return empty status of receive queue. " alt="" coords="191,13,337,39"/>
+<area shape="rect" id="node3" href="$group__aci__queue.html#ga59953d6fc43d0d95867cfadc6cd1f310" title="aci_queue_is_empty" alt="" coords="385,13,524,39"/>
+</map>

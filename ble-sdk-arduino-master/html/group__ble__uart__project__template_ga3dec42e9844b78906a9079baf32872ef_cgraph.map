@@ -1,0 +1,45 @@
+<map id="aci_loop" name="aci_loop">
+<area shape="rect" id="node2" href="$group__lib__aci.html#ga4202742fad8317b1b8426d29c0a6ed6b" title="Gets an ACI event from the ACI Event Queue. " alt="" coords="342,661,461,688"/>
+<area shape="rect" id="node19" href="$group__lib__aci.html#ga76975038ef22824d265af381408ffa9c" title="Tries to connect to a peer device. " alt="" coords="143,56,249,83"/>
+<area shape="rect" id="node22" href="$group__lib__aci.html#gad1958b151a27947fdf209111cb205e48" title="Sets Local Data. " alt="" coords="123,173,269,200"/>
+<area shape="rect" id="node24" href="$group__ble__uart__project__template.html#ga1551816ec872e221cfd030a14186f1de" title="uart_over_ble_init" alt="" coords="137,341,255,368"/>
+<area shape="rect" id="node25" href="$group__lib__aci.html#ga522754bcafa416007b2c83dffb80dde0" title="Gets the radio&#39;s version. " alt="" coords="123,291,269,317"/>
+<area shape="rect" id="node27" href="$group__lib__aci.html#ga5e94c289c5bb45ffb72ca4846293feae" title="Checks if a given pipe is available. " alt="" coords="319,509,483,536"/>
+<area shape="rect" id="node28" href="$group__lib__aci.html#ga6fcf57ab6f100c5a51d4e6f6fea28a11" title="Sends a L2CAP change connection parameters request with the connection predefined preffered connectio..." alt="" coords="124,393,268,434"/>
+<area shape="rect" id="node30" href="$group__ble__uart__project__template.html#ga5c6ff3c2c605c54701709326f584e1e7" title="uart_tx" alt="" coords="166,459,226,485"/>
+<area shape="rect" id="node33" href="$group__ble__uart__project__template.html#ga12a47ead7867ad8c712aed8f173feb52" title="uart_process_control\l_point_rx" alt="" coords="127,561,265,602"/>
+<area shape="rect" id="node38" href="$aci__setup_8cpp.html#a88c9660938f69ca72f79482f720caccd" title="Setup the nRF8001 device. " alt="" coords="147,712,245,739"/>
+<area shape="rect" id="node3" href="$group__hal__aci__tl.html#ga06bd760f052b6437d7f3e31872b08a5b" title="Get an ACI event from the event queue. " alt="" coords="559,661,695,688"/>
+<area shape="rect" id="node4" href="$group__aci__queue.html#ga219223013fba26ae499363281ea975f0" title="aci_queue_is_full" alt="" coords="1221,585,1338,612"/>
+<area shape="rect" id="node5" href="$hal__aci__tl_8cpp.html#a9bcc34d5decad95bfc32eafad2e4afab" title="m_aci_event_check" alt="" coords="775,661,907,688"/>
+<area shape="rect" id="node6" href="$group__aci__queue.html#ga59953d6fc43d0d95867cfadc6cd1f310" title="aci_queue_is_empty" alt="" coords="1210,813,1349,840"/>
+<area shape="rect" id="node7" href="$hal__aci__tl_8cpp.html#a41c0be0f98fbd1427b79381a39b4b2a6" title="m_aci_reqn_enable" alt="" coords="1213,357,1345,384"/>
+<area shape="rect" id="node8" href="$group__aci__queue.html#gad812c580864f77cc485347209803f8d4" title="aci_queue_dequeue" alt="" coords="987,763,1123,789"/>
+<area shape="rect" id="node13" href="$hal__aci__tl_8cpp.html#a151e0dd5c37fc07fb8026cc81abfad67" title="m_aci_data_print" alt="" coords="782,509,901,536"/>
+<area shape="rect" id="node14" href="$hal__aci__tl_8cpp.html#a7d0eeb43e696520b1dbfd3e6ca868f1c" title="m_aci_isr" alt="" coords="804,205,879,232"/>
+<area shape="rect" id="node9" href="$hal__aci__tl_8cpp.html#a80aba37363e6be41770ec349a43f8640" title="m_aci_spi_transfer" alt="" coords="992,459,1119,485"/>
+<area shape="rect" id="node12" href="$group__aci__queue.html#gaca9603d62427ad7e1f75f3b3a15c4bf0" title="aci_queue_enqueue" alt="" coords="987,560,1123,587"/>
+<area shape="rect" id="node10" href="$hal__aci__tl_8cpp.html#a8fb5ce292cdfbb3b019c0458097f6371" title="spi_readwrite" alt="" coords="1231,484,1328,511"/>
+<area shape="rect" id="node11" href="$hal__aci__tl_8cpp.html#aef527d76f41e908deba28012329c64b3" title="m_aci_reqn_disable" alt="" coords="1212,433,1347,460"/>
+<area shape="rect" id="node15" href="$group__aci__queue.html#ga45ac700eb172aaa56e88bff04e203325" title="aci_queue_dequeue_from_isr" alt="" coords="963,205,1148,232"/>
+<area shape="rect" id="node16" href="$group__aci__queue.html#gaf353b06d7a10a18da3d90919aff1af5a" title="aci_queue_is_empty\l_from_isr" alt="" coords="1210,173,1349,214"/>
+<area shape="rect" id="node17" href="$group__aci__queue.html#ga30a44654e965f6b86d7548cdc71f43f1" title="aci_queue_is_full_from_isr" alt="" coords="1196,79,1363,105"/>
+<area shape="rect" id="node18" href="$group__aci__queue.html#gafb2ab109859a03cf2c66938f9f76399b" title="aci_queue_enqueue_from_isr" alt="" coords="963,104,1148,131"/>
+<area shape="rect" id="node20" href="$acilib_8cpp.html#a00f09b3df19d6e628ccbb6e80c442824" title="Encode the ACI message to connect. " alt="" coords="317,5,485,32"/>
+<area shape="rect" id="node21" href="$group__hal__aci__tl.html#gac1d6ec6add37bfd195db5da15af49b17" title="Sends an ACI command to the radio. " alt="" coords="572,408,681,435"/>
+<area shape="rect" id="node23" href="$acilib_8cpp.html#ade574008532fa14197ad459930a3b62b" title="Encode the ACI message for set local data. " alt="" coords="330,107,473,149"/>
+<area shape="rect" id="node26" href="$acilib_8cpp.html#a724dc4658319dd9aed04319d2a14266c" title="Encode the ACI message for get device version. " alt="" coords="330,225,473,266"/>
+<area shape="rect" id="node29" href="$acilib_8cpp.html#abcacf644de092c894e4d3e9e91be811d" title="Encode the ACI message to change timing request using the timing parameters from GAP PPCP..." alt="" coords="318,393,485,434"/>
+<area shape="rect" id="node31" href="$group__lib__aci.html#gaf6418c6bf63163a90b94b9722a1b5e69" title="Sends data on a given pipe. " alt="" coords="339,459,464,485"/>
+<area shape="rect" id="node32" href="$acilib_8cpp.html#a4ad653edeb95550e03c41cd65e2e3b79" title="Encode the ACI message for send data. " alt="" coords="533,459,720,485"/>
+<area shape="rect" id="node34" href="$group__lib__aci.html#gac1a6a32e068a660a1ad4519dafe8bdca" title="Disconnects from peer device. " alt="" coords="340,560,463,587"/>
+<area shape="rect" id="node36" href="$group__lib__aci.html#ga370651f7f4651ca2e0f3d22015ab8aff" title="Sends a L2CAP change connection parameters request. " alt="" coords="329,611,473,637"/>
+<area shape="rect" id="node35" href="$acilib_8cpp.html#a493dab969883b07d7dab98c4b0ebce86" title="Encode the ACI message to disconnect. " alt="" coords="535,544,719,571"/>
+<area shape="rect" id="node37" href="$acilib_8cpp.html#ab1eac981674a1cba7998951b0216715c" title="Encode the ACI message to change timing request. " alt="" coords="543,595,710,637"/>
+<area shape="rect" id="node39" href="$group__lib__aci.html#ga0de6f9488df25450607bdebea6aee0de" title="Return empty status of Command queue. " alt="" coords="546,861,707,902"/>
+<area shape="rect" id="node41" href="$group__lib__aci.html#gad26901732f644fb78e7e10844724c2d3" title="Peeks an ACI event from the ACI Event Queue. " alt="" coords="336,763,467,789"/>
+<area shape="rect" id="node44" href="$aci__setup_8cpp.html#a279666eb675e431cb2cd461e9ab1a848" title="aci_setup_fill" alt="" coords="355,712,448,739"/>
+<area shape="rect" id="node40" href="$group__hal__aci__tl.html#ga007e10de93fab710beb737ba031eab7a" title="Return empty status of transmit queue. " alt="" coords="768,915,915,941"/>
+<area shape="rect" id="node42" href="$group__hal__aci__tl.html#gaf0c69bb99ba4f132d89e12b23976b645" title="Peek an ACI event from the event queue. " alt="" coords="553,763,700,789"/>
+<area shape="rect" id="node43" href="$group__aci__queue.html#ga58adb841c9614cb3f1a8ca632f200f50" title="aci_queue_peek" alt="" coords="784,864,899,891"/>
+</map>

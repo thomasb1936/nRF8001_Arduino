@@ -1,0 +1,4 @@
+<map id="acil_encode_cmd_send_data_ack" name="acil_encode_cmd_send_data_ack">
+<area shape="rect" id="node2" href="$acilib__if_8h.html#a68031608736636b07a9fc06b9425397f" title="Encode the ACI message. " alt="" coords="207,5,325,32"/>
+<area shape="rect" id="node3" href="$group__lib__aci.html#gac83a889a26a0c6925636842dd403ccfb" title="Sends acknowledgement message to peer. " alt="" coords="207,56,325,83"/>
+</map>

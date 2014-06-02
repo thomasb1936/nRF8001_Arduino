@@ -1,0 +1,4 @@
+<map id="acil_encode_cmd_read_dynamic_data" name="acil_encode_cmd_read_dynamic_data">
+<area shape="rect" id="node2" href="$acilib__if_8h.html#a68031608736636b07a9fc06b9425397f" title="Encode the ACI message. " alt="" coords="233,5,351,32"/>
+<area shape="rect" id="node3" href="$group__lib__aci.html#gaadcea809be34ee18aeff519f3cab79e1" title="Sends ReadDynamicData command to the host. " alt="" coords="204,56,380,83"/>
+</map>

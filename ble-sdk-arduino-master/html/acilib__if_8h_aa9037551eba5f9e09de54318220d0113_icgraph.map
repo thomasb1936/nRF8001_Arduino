@@ -1,0 +1,7 @@
+<map id="acil_encode_baseband_reset" name="acil_encode_baseband_reset">
+<area shape="rect" id="node2" href="$acilib__if_8h.html#a68031608736636b07a9fc06b9425397f" title="Encode the ACI message. " alt="" coords="211,5,330,32"/>
+<area shape="rect" id="node3" href="$group__lib__aci.html#ga35d3abfacf6363903523395c78d0d407" title="Resets the radio. " alt="" coords="208,56,333,83"/>
+<area shape="rect" id="node4" href="$lib__aci_8cpp.html#ad491f33190ddc3c971e52c64473d3c24" title="lib_aci_board_init" alt="" coords="381,56,500,83"/>
+<area shape="rect" id="node5" href="$group__lib__aci.html#ga4c778b64f787e39679943846c1c66fa0" title="Initialization function. " alt="" coords="548,56,627,83"/>
+<area shape="rect" id="node6" href="$group__ble__uart__project__template.html#ga7dfd9b79bc5a37d7df40207afbc5431f" title="setup" alt="" coords="675,56,729,83"/>
+</map>

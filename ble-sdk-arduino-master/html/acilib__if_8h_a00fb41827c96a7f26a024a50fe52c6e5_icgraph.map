@@ -1,0 +1,4 @@
+<map id="acil_encode_cmd_open_adv_pipes" name="acil_encode_cmd_open_adv_pipes">
+<area shape="rect" id="node2" href="$group__lib__aci.html#ga68931b6db3b05d475613c7c78b8a2cd9" title="Sends a command to the radio to set the pipes to be placed in Advertisement Service Data..." alt="" coords="208,5,369,32"/>
+<area shape="rect" id="node3" href="$group__lib__aci.html#ga006c2e54194beff2c49b82b62ca56b93" title="Sends a command to the radio to set the input pipe to be placed in Advertisement Service Data..." alt="" coords="211,56,366,83"/>
+</map>

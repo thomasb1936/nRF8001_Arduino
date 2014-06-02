@@ -1,0 +1,26 @@
+<map id="acil_encode_cmd" name="acil_encode_cmd">
+<area shape="rect" id="node2" href="$acilib_8cpp.html#a57bf05f820d4e307b80fce4721082368" title="Encode the ACI message for set test mode command. " alt="" coords="200,5,343,47"/>
+<area shape="rect" id="node3" href="$acilib_8cpp.html#a50f39ee4f14ebad3d45569f5b42c2396" title="Encode the ACI message for sleep command. " alt="" coords="193,71,349,98"/>
+<area shape="rect" id="node4" href="$acilib_8cpp.html#a724dc4658319dd9aed04319d2a14266c" title="Encode the ACI message for get device version. " alt="" coords="200,123,343,164"/>
+<area shape="rect" id="node5" href="$acilib_8cpp.html#a5dd165e348b297aed71f00969a10ea8b" title="Encode the ACI message to wakeup. " alt="" coords="185,189,357,215"/>
+<area shape="rect" id="node6" href="$acilib_8cpp.html#a3718cdfe19999f1a7bab1bfe17a69f91" title="Encode the ACI message for echo message. " alt="" coords="180,239,363,266"/>
+<area shape="rect" id="node7" href="$acilib_8cpp.html#a3602417662b8c06325e2a1d672a1af9b" title="Encode the ACI message to battery level. " alt="" coords="189,291,353,332"/>
+<area shape="rect" id="node8" href="$acilib_8cpp.html#abd9938bfe9f4ad95426d2c9a34b9074a" title="Encode the ACI message to temparature. " alt="" coords="175,357,367,383"/>
+<area shape="rect" id="node9" href="$acilib_8cpp.html#a3850fea591becc28422f73f6926d86c3" title="Encode the ACI message for get device address. " alt="" coords="200,408,343,449"/>
+<area shape="rect" id="node10" href="$acilib_8cpp.html#accef27bca4530b534092f629d9a05a73" title="Encode the ACI message for set radio Tx power. " alt="" coords="200,473,343,515"/>
+<area shape="rect" id="node11" href="$acilib_8cpp.html#a00f09b3df19d6e628ccbb6e80c442824" title="Encode the ACI message to connect. " alt="" coords="187,539,355,566"/>
+<area shape="rect" id="node12" href="$acilib_8cpp.html#ac76ca06d88e97366ba512a0ca3981dae" title="Encode the ACI message to bond. " alt="" coords="194,590,349,617"/>
+<area shape="rect" id="node13" href="$acilib_8cpp.html#a493dab969883b07d7dab98c4b0ebce86" title="Encode the ACI message to disconnect. " alt="" coords="179,641,363,667"/>
+<area shape="rect" id="node14" href="$acilib_8cpp.html#aa9037551eba5f9e09de54318220d0113" title="Encode the ACI message to baseband reset. " alt="" coords="194,692,349,733"/>
+<area shape="rect" id="node15" href="$acilib_8cpp.html#ab1eac981674a1cba7998951b0216715c" title="Encode the ACI message to change timing request. " alt="" coords="188,757,355,799"/>
+<area shape="rect" id="node16" href="$acilib_8cpp.html#acfc0adac66850ab3682ad33e6323fce8" title="Encode the ACI message for setup. " alt="" coords="193,823,350,850"/>
+<area shape="rect" id="node17" href="$acilib_8cpp.html#a0ce380618fd413c9980ef57fc8062243" title="Encode the ACI message for DTM command. " alt="" coords="184,874,359,901"/>
+<area shape="rect" id="node18" href="$acilib_8cpp.html#a9256b92e75602c0687e8b3891e55501b" title="Encode the ACI message to read dynamic data. " alt="" coords="196,925,347,967"/>
+<area shape="rect" id="node19" href="$acilib_8cpp.html#a5aa3556803e18ceb0b267cad0b4ac748" title="Encode the ACI message for write dynamic data. " alt="" coords="196,991,347,1032"/>
+<area shape="rect" id="node20" href="$acilib_8cpp.html#ab42e7da6c26225c5f784ea81bc73e6b9" title="Encode the ACI message for open remote pipe. " alt="" coords="194,1056,349,1097"/>
+<area shape="rect" id="node21" href="$acilib_8cpp.html#a4ad653edeb95550e03c41cd65e2e3b79" title="Encode the ACI message for send data. " alt="" coords="178,1122,365,1149"/>
+<area shape="rect" id="node22" href="$acilib_8cpp.html#a4ded2bee2a14b2686e43909f4f8fe0fd" title="Encode the ACI message to send data acknowledgement. " alt="" coords="195,1173,348,1215"/>
+<area shape="rect" id="node23" href="$acilib_8cpp.html#a9bf3adaca1c0d3b8eac6221014895743" title="Encode the ACI message for request data. " alt="" coords="172,1239,371,1266"/>
+<area shape="rect" id="node24" href="$acilib_8cpp.html#ade574008532fa14197ad459930a3b62b" title="Encode the ACI message for set local data. " alt="" coords="200,1291,343,1332"/>
+<area shape="rect" id="node25" href="$acilib_8cpp.html#a4d2f3f2ff3af15bb86112eb42aea93a3" title="Encode the ACI message for Bond Security Request command. " alt="" coords="194,1356,349,1397"/>
+</map>

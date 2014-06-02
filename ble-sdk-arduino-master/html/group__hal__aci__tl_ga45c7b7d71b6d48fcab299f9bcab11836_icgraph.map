@@ -1,0 +1,6 @@
+<map id="hal_aci_tl_pin_reset" name="hal_aci_tl_pin_reset">
+<area shape="rect" id="node2" href="$group__hal__aci__tl.html#ga01d2ea955f548ece67b78639f2b7eea3" title="ACI Transport Layer initialization. " alt="" coords="195,5,290,32"/>
+<area shape="rect" id="node5" href="$group__lib__aci.html#ga3ae51c9ee97b472c4f0e28ddd495073a" title="Function to pin reset the nRF8001. " alt="" coords="185,56,300,83"/>
+<area shape="rect" id="node3" href="$group__lib__aci.html#ga4c778b64f787e39679943846c1c66fa0" title="Initialization function. " alt="" coords="348,5,427,32"/>
+<area shape="rect" id="node4" href="$group__ble__uart__project__template.html#ga7dfd9b79bc5a37d7df40207afbc5431f" title="setup" alt="" coords="475,5,529,32"/>
+</map>

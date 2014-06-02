@@ -1,3 +1,0 @@
--create nrf8001 dir DONE
--in nrf8001 change the pins file to reflect the actual connections.
--do we to handle interrups?

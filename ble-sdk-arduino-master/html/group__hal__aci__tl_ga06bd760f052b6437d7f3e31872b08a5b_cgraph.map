@@ -1,0 +1,17 @@
+<map id="hal_aci_tl_event_get" name="hal_aci_tl_event_get">
+<area shape="rect" id="node2" href="$group__aci__queue.html#ga219223013fba26ae499363281ea975f0" title="aci_queue_is_full" alt="" coords="627,12,745,38"/>
+<area shape="rect" id="node3" href="$hal__aci__tl_8cpp.html#a9bcc34d5decad95bfc32eafad2e4afab" title="m_aci_event_check" alt="" coords="189,138,321,165"/>
+<area shape="rect" id="node4" href="$group__aci__queue.html#ga59953d6fc43d0d95867cfadc6cd1f310" title="aci_queue_is_empty" alt="" coords="617,113,755,140"/>
+<area shape="rect" id="node5" href="$hal__aci__tl_8cpp.html#a41c0be0f98fbd1427b79381a39b4b2a6" title="m_aci_reqn_enable" alt="" coords="620,316,752,342"/>
+<area shape="rect" id="node6" href="$group__aci__queue.html#gad812c580864f77cc485347209803f8d4" title="aci_queue_dequeue" alt="" coords="394,164,530,190"/>
+<area shape="rect" id="node11" href="$hal__aci__tl_8cpp.html#a151e0dd5c37fc07fb8026cc81abfad67" title="m_aci_data_print" alt="" coords="196,442,315,469"/>
+<area shape="rect" id="node12" href="$hal__aci__tl_8cpp.html#a7d0eeb43e696520b1dbfd3e6ca868f1c" title="m_aci_isr" alt="" coords="218,392,293,418"/>
+<area shape="rect" id="node7" href="$hal__aci__tl_8cpp.html#a80aba37363e6be41770ec349a43f8640" title="m_aci_spi_transfer" alt="" coords="399,214,525,241"/>
+<area shape="rect" id="node10" href="$group__aci__queue.html#gaca9603d62427ad7e1f75f3b3a15c4bf0" title="aci_queue_enqueue" alt="" coords="394,62,530,89"/>
+<area shape="rect" id="node8" href="$hal__aci__tl_8cpp.html#a8fb5ce292cdfbb3b019c0458097f6371" title="spi_readwrite" alt="" coords="637,240,735,266"/>
+<area shape="rect" id="node9" href="$hal__aci__tl_8cpp.html#aef527d76f41e908deba28012329c64b3" title="m_aci_reqn_disable" alt="" coords="619,189,753,216"/>
+<area shape="rect" id="node13" href="$group__aci__queue.html#ga45ac700eb172aaa56e88bff04e203325" title="aci_queue_dequeue_from_isr" alt="" coords="369,468,555,494"/>
+<area shape="rect" id="node14" href="$group__aci__queue.html#gaf353b06d7a10a18da3d90919aff1af5a" title="aci_queue_is_empty\l_from_isr" alt="" coords="617,435,755,476"/>
+<area shape="rect" id="node15" href="$group__aci__queue.html#ga30a44654e965f6b86d7548cdc71f43f1" title="aci_queue_is_full_from_isr" alt="" coords="603,548,769,574"/>
+<area shape="rect" id="node16" href="$group__aci__queue.html#gafb2ab109859a03cf2c66938f9f76399b" title="aci_queue_enqueue_from_isr" alt="" coords="369,569,555,596"/>
+</map>
