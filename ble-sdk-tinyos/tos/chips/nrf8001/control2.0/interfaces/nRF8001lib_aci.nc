@@ -13,6 +13,8 @@
 
 interface nRF8001lib_aci
 {
+
+	command bool aci_init();
 	command bool is_pipe_available(aci_state_t *aci_stat, uint8_t pipe);
 	command bool is_pipe_closed(aci_state_t *aci_stat, uint8_t pipe);
 	command bool is_discovery_finished(aci_state_t *aci_stat);

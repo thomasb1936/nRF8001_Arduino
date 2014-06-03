@@ -31,7 +31,7 @@ implementation {
 	ACTIVE = IO.PortF2;
 	RESET  = IO.PortF3;
 	REQN   = IO.PortE5;
-	RDYN   = IO.PortE6; //TODO - double check that this is the same port as Int6 in HplAtm128InterruptC
+	RDYN   = IO.PortE4; 
 
 	components new Atm128GpioInterruptC() as InterruptRDYNC;
 	components HplAtm128InterruptC as Interrupts;

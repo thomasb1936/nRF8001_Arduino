@@ -37,7 +37,7 @@ module nRF8001hal_aci_tlP
 
 
     interface Resource as SpiResource;
-    interface BusyWait<TMicro, uint16_t>; 
+    interface BusyWait<TMicro, uint16_t>;
     
     interface FastSpiByte;
     interface nRF8001lib_aci as lib_aci;
@@ -48,6 +48,8 @@ module nRF8001hal_aci_tlP
     interface GeneralIO as RESET;
     interface GeneralIO as REQN;
     interface GeneralIO as RDYN;
+
+    interface Leds;
 
   }
   provides
@@ -95,10 +97,18 @@ implementation
   /*
     Interrupt service routine called when the RDYN line goes low. Runs the SPI transfer.
   */
+
+    static void m_aci_pins_set(aci_pins_t *a_pins_ptr)
+	{
+  		a_pins_local_ptr = a_pins_ptr;
+		
+	}	
+
   static void m_aci_isr(void)
   {
     hal_aci_data_t data_to_send;
     hal_aci_data_t received_data;
+    
 
     // Receive from queue
     if (!( call aci_queue.dequeue_from_isr(&aci_tx_q, &data_to_send)))
@@ -234,10 +244,12 @@ implementation
     uint8_t max_bytes;
 
     m_aci_reqn_enable();
-
+    
     // Send length, receive header
     byte_sent_cnt = 0;
+
     received_data->status_byte = spi_readwrite(data_to_send->buffer[byte_sent_cnt++]);
+
     // Send first byte, receive length from slave
     received_data->buffer[0] = spi_readwrite(data_to_send->buffer[byte_sent_cnt++]);
     if (0 == data_to_send->buffer[0])
@@ -266,6 +278,7 @@ implementation
     // RDYN should follow the REQN line in approx 100ns
     m_aci_reqn_disable();
 
+
     return (max_bytes > 0);
   }
 
@@ -276,15 +289,16 @@ implementation
 
   command void hal_aci_tl.pin_reset(void)
   {
-      call RESET.set();
-      call BusyWait.wait(50);
       call RESET.clr();
+      call BusyWait.wait(10);
+      call RESET.set();
   }
 
   command bool hal_aci_tl.event_peek(hal_aci_data_t *p_aci_data)
   {
     if (!a_pins_local_ptr->interface_is_interrupt)
     {
+
       m_aci_event_check();
     }
 
@@ -299,16 +313,20 @@ implementation
   command bool hal_aci_tl.event_get(hal_aci_data_t *p_aci_data)
   {
     bool was_full;
-
-    if (!a_pins_local_ptr->interface_is_interrupt && !(call aci_queue.is_full(&aci_rx_q)))
+    //had issues with this line since interface is interrupt doesn't apply to tiny OS.
+    //if (!a_pins_local_ptr->interface_is_interrupt && !(call aci_queue.is_full(&aci_rx_q)))
+    if(!(call aci_queue.is_full(&aci_rx_q)))
     {
+      
       m_aci_event_check();
     }
 
     was_full = call aci_queue.is_full(&aci_rx_q);
 
+
     if (call aci_queue.dequeue(&aci_rx_q, p_aci_data))
     {
+
 
       if (was_full && a_pins_local_ptr->interface_is_interrupt)
   	  {
@@ -332,10 +350,17 @@ implementation
 
   command void hal_aci_tl.init(aci_pins_t *a_pins, bool debug)
   {
+  	m_aci_pins_set(a_pins);
 
+    
     call ACTIVE.makeOutput();
     call REQN.makeOutput();
+    call REQN.set();
     call RESET.makeOutput();
+    call RESET.set();
+
+
+
 
     call InterruptRDYN.disable(); //why would we disable the interrupt at start up?
 
@@ -346,6 +371,9 @@ implementation
 
     call BusyWait.wait(50);
     call InterruptRDYN.enableRisingEdge();
+
+
+    return;
 
   }
 
@@ -381,9 +409,18 @@ implementation
   inline static uint8_t spi_readwrite(const uint8_t aci_byte)
   {
     uint8_t value;
-    call FastSpiByte.splitWrite(aci_byte);
-    value = call FastSpiByte.splitRead(); 
+    call Leds.led2Toggle();
+    //call FastSpiByte.write(aci_byte);
+    value = call FastSpiByte.write(aci_byte); 
+        	call Leds.led1Toggle();
+        	call BusyWait.wait(100);
 
+
+    if(value == 0x5)
+    {
+    	call Leds.led1Toggle();
+    }
+    return value;
   }
 
   command bool hal_aci_tl.rx_q_empty (void)

@@ -14,6 +14,10 @@
 #include "hal_aci_tl.h"
 #include "aci_queue.h"
 #include "lib_aci.h"
+#include <aci_setup.h>
+//#include "uart_over_ble.h"
+#include "services.h"
+
 
 
 //TODO deal with this
@@ -30,16 +34,31 @@ module nRF8001lib_aciP
     interface nRF8001aci_queue as aci_queue;
     interface nRF8001hal_aci_tl as hal_aci_tl;
     interface nRF8001acilib as acil;
+    interface Leds;
   }
   provides
   {
     interface nRF8001lib_aci as lib_aci;
+    //interface Init as aci_init;
   }
 }
 
 implementation
 {
+
+  #ifdef SERVICES_PIPE_TYPE_MAPPING_CONTENT
+      static services_pipe_type_mapping_t
+          services_pipe_type_mapping[NUMBER_OF_PIPES] = SERVICES_PIPE_TYPE_MAPPING_CONTENT;
+  #else
+      #define NUMBER_OF_PIPES 0
+      static services_pipe_type_mapping_t * services_pipe_type_mapping = NULL;
+  #endif
+
+  static hal_aci_data_t setup_msgs[NB_SETUP_MESSAGES] PROGMEM = SETUP_MESSAGES_CONTENT;
+
   hal_aci_data_t  msg_to_send;
+
+  static struct aci_state_t aci_state;
 
 
   static services_pipe_type_mapping_t * p_services_pipe_type_map;
@@ -63,8 +82,152 @@ implementation
 
 
 
-  extern aci_queue_t    aci_rx_q;
-  extern aci_queue_t    aci_tx_q;
+  static aci_queue_t    aci_rx_q;
+  static aci_queue_t    aci_tx_q;
+
+  command bool lib_aci.aci_init()
+  {
+    if (NULL != services_pipe_type_mapping)
+    {
+      aci_state.aci_setup_info.services_pipe_type_mapping = &services_pipe_type_mapping[0];
+    }
+    else
+    {
+      aci_state.aci_setup_info.services_pipe_type_mapping = NULL;
+    }
+    aci_state.aci_setup_info.number_of_pipes    = NUMBER_OF_PIPES;
+    aci_state.aci_setup_info.setup_msgs         = setup_msgs;
+    aci_state.aci_setup_info.num_setup_msgs     = NB_SETUP_MESSAGES;
+
+    //We reset the nRF8001 here by toggling the RESET line connected to the nRF8001
+    //If the RESET line is not available we call the ACI Radio Reset to soft reset the nRF8001
+    //then we initialize the data structures required to setup the nRF8001
+    //The second parameter is for turning debug printing on for the ACI Commands and Events so they be printed on the Serial
+    call lib_aci.init(&aci_state, FALSE);  
+
+
+    return TRUE;
+  }
+
+ /* **************************************************************************                */
+/* Utility function to fill the the ACI command queue                                      */
+/* aci_stat               Pointer to the ACI state                                         */
+/* num_cmd_offset(in/out) Offset in the Setup message array to start from                  */
+/*                        offset is updated to the new index after the queue is filled     */
+/*                        or the last message us placed in the queue                       */
+/* Returns                TRUE if at least one message was transferred                     */
+/***************************************************************************/
+inline static bool aci_setup_fill(aci_state_t *aci_stat, uint8_t *num_cmd_offset)
+{
+  bool ret_val = FALSE;
+  
+  while (*num_cmd_offset < aci_stat->aci_setup_info.num_setup_msgs)
+  {
+    //Put the Setup ACI message in the command queue
+    if (!(call hal_aci_tl.send(&msg_to_send)))
+    {
+
+      //ACI Command Queue is full
+      // *num_cmd_offset is now pointing to the index of the Setup command that did not get sent
+      return ret_val;
+    }
+   
+    ret_val = TRUE;
+    
+    (*num_cmd_offset)++;
+  }
+  
+  return ret_val;
+}
+
+inline uint8_t do_aci_setup(aci_state_t *aci_stat)
+{
+  uint8_t setup_offset         = 0;
+  uint32_t i                   = 0x0000;
+  aci_evt_t * aci_evt          = NULL;
+  aci_status_code_t cmd_status = ACI_STATUS_ERROR_CRC_MISMATCH;
+  
+  /*
+  We are using the same buffer since we are copying the contents of the buffer 
+  when queuing and immediately processing the buffer when receiving
+  */
+  hal_aci_evt_t  *aci_data = (hal_aci_evt_t *)&msg_to_send;
+  
+  /* Messages in the outgoing queue must be handled before the Setup routine can run.
+   * If it is non-empty we return. The user should then process the messages before calling
+   * do_aci_setup() again.
+   */
+  if (!(call lib_aci.command_queue_empty()))
+  {
+    return SETUP_FAIL_COMMAND_QUEUE_NOT_EMPTY;
+  }
+  
+  /* If there are events pending from the device that are not relevant to setup, we return FALSE
+   * so that the user can handle them. At this point we don't care what the event is,
+   * as any event is an error.
+   */
+  if (call lib_aci.event_peek(aci_data))
+  {
+    return SETUP_FAIL_EVENT_QUEUE_NOT_EMPTY;
+  }
+  
+  /* Fill the ACI command queue with as many Setup messages as it will hold. */
+  aci_setup_fill(aci_stat, &setup_offset);
+
+
+  
+  while (cmd_status != ACI_STATUS_TRANSACTION_COMPLETE)
+  {
+    /* This counter is used to ensure that this function does not loop forever. When the device
+     * returns a valid response, we reset the counter.
+     */
+    if (i++ > 0xFFFFE)
+    {
+      return SETUP_FAIL_TIMEOUT;  
+    }
+    
+    if (call lib_aci.event_peek(aci_data))
+    {
+      aci_evt = &(aci_data->evt);
+      
+      if (ACI_EVT_CMD_RSP != aci_evt->evt_opcode)
+      {
+        //Receiving something other than a Command Response Event is an error.
+        return SETUP_FAIL_NOT_COMMAND_RESPONSE;
+      }
+      
+      cmd_status = (aci_status_code_t) aci_evt->params.cmd_rsp.cmd_status;
+      switch (cmd_status)
+      {
+        case ACI_STATUS_TRANSACTION_CONTINUE:
+          //As the device is responding, reset guard counter
+          i = 0;
+          
+          /* As the device has processed the Setup messages we put in the command queue earlier,
+           * we can proceed to fill the queue with new messages
+           */
+          aci_setup_fill(aci_stat, &setup_offset);
+          break;
+        
+        case ACI_STATUS_TRANSACTION_COMPLETE:
+          //Break out of the while loop when this status code appears
+          break;
+        
+        default:
+          //An event with any other status code should be handled by the application
+          return SETUP_FAIL_NOT_SETUP_EVENT;
+      }
+      
+      /* If we haven't returned at this point, the event was either ACI_STATUS_TRANSACTION_CONTINUE
+       * or ACI_STATUS_TRANSACTION_COMPLETE. We don't need the event itself, so we simply
+       * remove it from the queue.
+       */
+       call lib_aci.event_get (aci_stat, aci_data);
+    }
+  }
+  
+  return SETUP_SUCCESS;
+}
 
   command bool lib_aci.is_pipe_available(aci_state_t *aci_stat, uint8_t pipe)
   {
@@ -99,8 +262,10 @@ implementation
 
   command void lib_aci.board_init(aci_state_t *aci_stat)
   {
+
   	hal_aci_evt_t *aci_data = NULL;
   	aci_data = (hal_aci_evt_t *)&msg_to_send;
+
   	if (1)				
   //if (REDBEARLAB_SHIELD_V1_1 == aci_stat->aci_pins.board_name)
   	{
@@ -114,21 +279,24 @@ implementation
   	  Send the soft reset command to the nRF8001 to get the nRF8001 to a known state.
   	  */
   	  call lib_aci.radio_reset();
-    
+
+      
   	  while (1)
   	  {
   		/*Wait for the command response of the radio reset command.
   		as the nRF8001 will be in either SETUP or STANDBY after the ACI Reset Radio is processed
   		*/
-
+      
   			
   		if (TRUE == (call lib_aci.event_get(aci_stat, aci_data)))
   		{
   		  aci_evt_t * aci_evt;      
   		  aci_evt = &(aci_data->evt);
-  	  
+
+
   		  if (ACI_EVT_CMD_RSP == aci_evt->evt_opcode)
   		  {
+
   				if (ACI_STATUS_ERROR_DEVICE_STATE_INVALID == aci_evt->params.cmd_rsp.cmd_status) //in SETUP
   				{
   					//Inject a Device Started Event Setup to the ACI Event Queue
@@ -137,7 +305,9 @@ implementation
   					msg_to_send.buffer[2] = 0x02; //Setup
   					msg_to_send.buffer[3] = 0;    //Hardware Error -> None
   					msg_to_send.buffer[4] = 2;    //Data Credit Available
-  					aci_queue_enqueue(&aci_rx_q, &msg_to_send);
+  					call aci_queue.enqueue(&aci_rx_q, &msg_to_send);
+            //
+            //while(1);
   				}
   				else if (ACI_STATUS_SUCCESS == aci_evt->params.cmd_rsp.cmd_status) //We are now in STANDBY
   				{
@@ -147,7 +317,7 @@ implementation
   					msg_to_send.buffer[2] = 0x03; //Standby
   					msg_to_send.buffer[3] = 0;    //Hardware Error -> None
   					msg_to_send.buffer[4] = 2;    //Data Credit Available
-  					aci_queue_enqueue(&aci_rx_q, &msg_to_send);
+  					call aci_queue.enqueue(&aci_rx_q, &msg_to_send);
   				}
   				else if (ACI_STATUS_ERROR_CMD_UNKNOWN == aci_evt->params.cmd_rsp.cmd_status) //We are now in TEST
   				{
@@ -157,7 +327,7 @@ implementation
   					msg_to_send.buffer[2] = 0x01; //Test
   					msg_to_send.buffer[3] = 0;    //Hardware Error -> None
   					msg_to_send.buffer[4] = 0;    //Data Credit Available
-  					aci_queue_enqueue(&aci_rx_q, &msg_to_send);
+  					call aci_queue.enqueue(&aci_rx_q, &msg_to_send);
   				}
   				
   				//Break out of the while loop
@@ -169,7 +339,7 @@ implementation
   		  }
   	  
   		}
-  	  }		
+  	  }	
   	}
   }
 
@@ -177,6 +347,7 @@ implementation
   command void lib_aci.init(aci_state_t *aci_stat, bool debug)
   {
     uint8_t i;
+    uint8_t return_val;
 
     for (i = 0; i < PIPES_ARRAY_SIZE; i++)
     {
@@ -205,11 +376,14 @@ implementation
     p_services_pipe_type_map = aci_stat->aci_setup_info.services_pipe_type_mapping;
     
     p_setup_msgs             = aci_stat->aci_setup_info.setup_msgs;
-    
+
+    aci_stat->aci_pins.interface_is_interrupt = FALSE;
     
     call hal_aci_tl.init(&aci_stat->aci_pins, debug);
-    
     call lib_aci.board_init(aci_stat);
+    call Leds.led2Toggle();
+    
+    return_val = do_aci_setup(aci_stat);
   }
 
 
@@ -562,18 +736,22 @@ implementation
   command bool lib_aci.event_get(aci_state_t *aci_stat, hal_aci_evt_t *p_aci_evt_data)
   {
     bool status = FALSE;
+
     
     status = call hal_aci_tl.event_get((hal_aci_data_t *)p_aci_evt_data);
-    
     /**
     Update the state of the ACI with the 
     ACI Events -> Pipe Status, Disconnected, Connected, Bond Status, Pipe Error
     */
     if (TRUE == status)
     {
+
+
+
       aci_evt_t * aci_evt;
       
-      aci_evt = &p_aci_evt_data->evt;  
+      aci_evt = &p_aci_evt_data->evt; 
+
       
       switch(aci_evt->evt_opcode)
       {

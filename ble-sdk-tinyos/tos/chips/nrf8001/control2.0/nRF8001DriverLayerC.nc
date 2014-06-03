@@ -13,11 +13,13 @@ implementation
 		nRF8001acilibP as acilib,
 		nRF8001hal_aci_tlP as hal,
 		HplNRF8001C as HplC,
-		MainC;
+		BusyWaitMicroC,
+		MainC,
+		LedsC;
 
 
 
-	//MainC.SoftwareInit -> hal_aci_tl.hal_aci_tl_init; //using high level init
+	//MainC.SoftwareInit -> lib.Init; //this should set us up at boot
 	MainC.SoftwareInit -> HplC.Init; 
 
  //Bring these to the top level for now so I can use them directly
@@ -33,9 +35,15 @@ implementation
 	hal.REQN -> HplC.REQN;
 	hal.RDYN -> HplC.RDYN;
 
+	hal.Leds -> LedsC;
+
+	hal.BusyWait -> BusyWaitMicroC;
+	hal.InterruptRDYN -> HplC;
+
 	hal.SpiResource -> HplC.SpiResource;
 	hal.FastSpiByte -> HplC.FastSpiByte;
 
+	//hal.BusyWait
 	//TODO missing busywait wiring
 	//TODO missing interrupt wiring 
 
@@ -44,6 +52,9 @@ implementation
      lib.aci_queue -> aciqueue.aci_queue;
      lib.hal_aci_tl -> hal.hal_aci_tl;
 	 lib.acil -> acilib.acil;
+	 lib.Leds -> LedsC;
+
+	 aciqueue.Leds -> LedsC;
 
 
 

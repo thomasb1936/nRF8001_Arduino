@@ -11,6 +11,7 @@ module nRF8001aci_queueP
 {
 
   provides interface nRF8001aci_queue as aci_queue;
+  uses interface Leds;
   
 }
 implementation
