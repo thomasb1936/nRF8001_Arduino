@@ -16,4 +16,5 @@ interface nRF8001hal_aci_tl
 	command bool tx_q_empty (void);
 	command bool tx_q_full (void);
 	command void q_flush (void);
+	command void board_init(aci_state_t *aci_stat);
 }

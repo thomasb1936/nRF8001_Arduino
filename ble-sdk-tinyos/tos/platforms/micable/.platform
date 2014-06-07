@@ -50,6 +50,8 @@ push( @includes, qw(
   %T/lib/serial
   %T/lib/power
   %T/lib/diagmsg
+  %T/lib/printf
+
 
 ) );
 
