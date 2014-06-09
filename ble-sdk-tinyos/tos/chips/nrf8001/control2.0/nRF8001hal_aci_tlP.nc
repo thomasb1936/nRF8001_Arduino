@@ -28,6 +28,7 @@
 #include "hal_aci_tl.h"
 #include "aci_queue.h"
 #include <avr/sleep.h>
+#include "printf.h"
 
 module nRF8001hal_aci_tlP
 {
@@ -49,6 +50,10 @@ module nRF8001hal_aci_tlP
     interface GeneralIO as REQN;
     interface GeneralIO as RDYN;
 
+    interface GeneralIO as SCK;
+    interface GeneralIO as MOSI;
+    interface GeneralIO as MISO;
+
     interface Leds;
 
   }
@@ -69,6 +74,8 @@ implementation
   static inline void m_aci_reqn_enable (void);
   static void m_aci_q_flush(void);
   static bool m_aci_spi_transfer(hal_aci_data_t * data_to_send, hal_aci_data_t * received_data);
+
+  static uint8_t spi_bitbang(uint8_t);
 
   static uint8_t        spi_readwrite(uint8_t aci_byte);
 
@@ -159,18 +166,20 @@ implementation
     // No room to store incoming messages
     if (call aci_queue.is_full(&aci_rx_q))
     {
+
       return;
     }
-
-    // If the ready line is disabled and we have pending messages outgoing we enable the request line
+        // If the ready line is disabled and we have pending messages outgoing we enable the request line
     //if (HIGH == digitalRead(a_pins_local_ptr->rdyn_pin)) 
 
     if(1 == (call RDYN.get()))
     {
       if (!(call aci_queue.is_empty(&aci_tx_q)))
       {
+      	 call Leds.led0Toggle();
         m_aci_reqn_enable();
       }
+      //call Leds.led0Toggle();
 
       return;
     }
@@ -192,11 +201,14 @@ implementation
       m_aci_reqn_enable();
     }
 
+
     // Check if we received data
     if (received_data.buffer[0] > 0)
     {
+    	//call Leds.led2Toggle();
       if (!(call aci_queue.enqueue(&aci_rx_q, &received_data)))
       {
+
         /* Receive Buffer full.
            Should never happen.
            Spin in a while loop.
@@ -242,6 +254,8 @@ implementation
     uint8_t byte_cnt;
     uint8_t byte_sent_cnt;
     uint8_t max_bytes;
+
+    //printf("SPI\n");
 
     m_aci_reqn_enable();
     
@@ -296,16 +310,21 @@ implementation
 
   command bool hal_aci_tl.event_peek(hal_aci_data_t *p_aci_data)
   {
+    
     if (!a_pins_local_ptr->interface_is_interrupt)
     {
 
       m_aci_event_check();
+
     }
 
     if (call aci_queue.peek(&aci_rx_q, p_aci_data))
     {
+    	
       return TRUE;
     }
+    //printf("false peekin\n");
+    //printfflush();
 
     return FALSE;
   }
@@ -314,16 +333,15 @@ implementation
   {
     bool was_full;
     //had issues with this line since interface is interrupt doesn't apply to tiny OS.
-    //if (!a_pins_local_ptr->interface_is_interrupt && !(call aci_queue.is_full(&aci_rx_q)))
-    if(!(call aci_queue.is_full(&aci_rx_q)))
-    {
-      
+    if (!a_pins_local_ptr->interface_is_interrupt && !(call aci_queue.is_full(&aci_rx_q)))
+    //if(!(call aci_queue.is_full(&aci_rx_q)))
+    { 
       m_aci_event_check();
     }
 
     was_full = call aci_queue.is_full(&aci_rx_q);
 
-
+    
     if (call aci_queue.dequeue(&aci_rx_q, p_aci_data))
     {
 
@@ -342,6 +360,7 @@ implementation
         m_aci_reqn_enable();
       }
 
+
       return TRUE;
     }
 
@@ -352,29 +371,105 @@ implementation
   {
   	m_aci_pins_set(a_pins);
 
-    
-    call ACTIVE.makeOutput();
     call REQN.makeOutput();
-    call REQN.set();
     call RESET.makeOutput();
-    call RESET.set();
+    //call SCK.makeOutput();
 
+    call MISO.makeInput();
+    call RDYN.makeInput();
+    call ACTIVE.makeInput();
 
+    call hal_aci_tl.pin_reset();
 
+    call REQN.set();
+    call SCK.clr();
+    call MOSI.set();
 
-    call InterruptRDYN.disable(); //why would we disable the interrupt at start up?
+    m_aci_reqn_enable();
+
 
     call aci_queue.init(&aci_tx_q);
     call aci_queue.init(&aci_rx_q);
 
-    call hal_aci_tl.pin_reset();
 
-    call BusyWait.wait(50);
-    call InterruptRDYN.enableRisingEdge();
+	call BusyWait.wait(50);
 
 
+    call InterruptRDYN.disable(); //why would we disable the interrupt at start up?
+
+    //call InterruptRDYN.enableRisingEdge();
     return;
 
+  }
+
+  command void hal_aci_tl.board_init(aci_state_t *aci_stat)
+  {
+
+  	hal_aci_evt_t *aci_data = NULL;
+  	hal_aci_data_t  msg_to_send;
+  	aci_data = (hal_aci_evt_t *)&msg_to_send;
+      
+  	  while (1)
+  	  {
+  		/*Wait for the command response of the radio reset command.
+  		as the nRF8001 will be in either SETUP or STANDBY after the ACI Reset Radio is processed
+  		*/
+      
+  			
+    		if (TRUE == (call hal_aci_tl.event_get((hal_aci_data_t *)aci_data)))
+    		{
+    		  aci_evt_t * aci_evt;      
+    		  aci_evt = &(aci_data->evt);
+    
+
+    		  if (ACI_EVT_CMD_RSP == aci_evt->evt_opcode)
+    		  {
+
+    				if (ACI_STATUS_ERROR_DEVICE_STATE_INVALID == aci_evt->params.cmd_rsp.cmd_status) //in SETUP
+    				{
+    					printf("Inject a Device Started Event Setup to the ACI Event Queue\n");
+    					printfflush();
+    					msg_to_send.buffer[0] = 4;    //Length
+    					msg_to_send.buffer[1] = 0x81; //Device Started Event
+    					msg_to_send.buffer[2] = 0x02; //Setup
+    					msg_to_send.buffer[3] = 0;    //Hardware Error -> None
+    					msg_to_send.buffer[4] = 2;    //Data Credit Available
+    					call aci_queue.enqueue(&aci_rx_q, &msg_to_send);
+             			
+             			call Leds.set(0x3);
+              //while(1);
+    				}
+    				else if (ACI_STATUS_SUCCESS == aci_evt->params.cmd_rsp.cmd_status) //We are now in STANDBY
+    				{
+    					//Inject a Device Started Event Standby to the ACI Event Queue
+    					msg_to_send.buffer[0] = 4;    //Length
+    					msg_to_send.buffer[1] = 0x81; //Device Started Event
+    					msg_to_send.buffer[2] = 0x03; //Standby
+    					msg_to_send.buffer[3] = 0;    //Hardware Error -> None
+    					msg_to_send.buffer[4] = 2;    //Data Credit Available
+    					call aci_queue.enqueue(&aci_rx_q, &msg_to_send);
+    				}
+    				else if (ACI_STATUS_ERROR_CMD_UNKNOWN == aci_evt->params.cmd_rsp.cmd_status) //We are now in TEST
+    				{
+    					//Inject a Device Started Event Test to the ACI Event Queue
+    					msg_to_send.buffer[0] = 4;    //Length
+    					msg_to_send.buffer[1] = 0x81; //Device Started Event
+    					msg_to_send.buffer[2] = 0x01; //Test
+    					msg_to_send.buffer[3] = 0;    //Hardware Error -> None
+    					msg_to_send.buffer[4] = 0;    //Data Credit Available
+    					call aci_queue.enqueue(&aci_rx_q, &msg_to_send);
+    				}
+    				
+    				//Break out of the while loop
+    				break;
+    		  }
+    		  else
+    		  {			
+    			//Serial.println(F("Discard any other ACI Events"));
+    		  }
+    		}
+  	}
+  return;
   }
 
   command bool hal_aci_tl.send(hal_aci_data_t *p_aci_cmd)
@@ -384,7 +479,11 @@ implementation
 
     if (length > HAL_ACI_MAX_LENGTH)
     {
+      //printf("L: %u\n",length);
+      //printf("ML: %u\n", HAL_ACI_MAX_LENGTH);
+      //printfflush();
       return FALSE;
+
     }
 
     ret_val = call aci_queue.enqueue(&aci_tx_q, p_aci_cmd);
@@ -396,11 +495,6 @@ implementation
         m_aci_reqn_enable();
       }
 
-     // if (aci_debug_print)
-      //{
-       // Serial.print("C"); //ACI Command
-        //m_aci_data_print(p_aci_cmd);
-      //}
     }
 
     return ret_val;
@@ -409,18 +503,68 @@ implementation
   inline static uint8_t spi_readwrite(const uint8_t aci_byte)
   {
     uint8_t value;
-    call Leds.led2Toggle();
+    //call Leds.led2Toggle();
     //call FastSpiByte.write(aci_byte);
-    value = call FastSpiByte.write(aci_byte); 
-        	call Leds.led1Toggle();
-        	call BusyWait.wait(100);
+    //value = call FastSpiByte.write(aci_byte); 
+     //   	call Leds.led1Toggle();
+ 	//       	call BusyWait.wait(100);
 
+ 	value = spi_bitbang(aci_byte);
 
     if(value == 0x5)
     {
-    	call Leds.led1Toggle();
+    	//call Leds.led1Toggle();
     }
     return value;
+  }
+
+  inline uint8_t spi_bitbang(uint8_t aci_byte)
+  {	
+  	uint8_t ret_val=0;
+  	uint8_t temp=0;
+  	int i=0;
+  	//call Leds.led1Toggle();
+  	if (aci_byte==0x15)
+	{
+		//call Leds.set(0x);
+	}
+	if(aci_byte == 0x01)
+	{
+		//call Leds.led2Toggle();
+	}
+  	
+  	atomic{
+	  	for(i=0; i<8; i++)
+	  	{
+	  		if((aci_byte & 1) == 1){
+	  			call MOSI.set();
+	  		}
+	  		else
+	  		{
+	  			call MOSI.clr();
+	  		}
+	  	
+	  		call SCK.set();
+
+	  		temp=call MISO.get();
+	  		
+	  		temp=temp<<i;
+	  	
+	  		call BusyWait.wait(2);
+
+	  		call SCK.clr();
+
+	  		
+	  		aci_byte= aci_byte>>1;
+	  		ret_val=ret_val | temp;
+	  		//ret_val = ret_val>>1;
+
+	  	}
+ 	 }
+  	call BusyWait.wait(2);
+	//if (ret_val==0x1) call Leds.led2Toggle();
+  	return ret_val;
+
   }
 
   command bool hal_aci_tl.rx_q_empty (void)

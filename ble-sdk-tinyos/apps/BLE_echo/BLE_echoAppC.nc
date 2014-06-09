@@ -47,7 +47,8 @@
  *
  * @author tinyos-help@millennium.berkeley.edu
  **/
-
+#define NEW_PRINTF_SEMANTICS
+#include "printf.h"
 configuration BLE_echoAppC
 {
 }
@@ -55,17 +56,15 @@ implementation
 {
   components MainC, BLE_echoC, LedsC;
   components new TimerMilliC() as Timer0;
-  components new TimerMilliC() as Timer1;
-  components new TimerMilliC() as Timer2;
-  //components nRF8001hal_aci_tlP as hal;
   components nRF8001DriverLayerC as Driver;
+  components PrintfC;
+  components SerialStartC;
 
 
-  BLE_echoC -> MainC.Boot;
+  BLE_echoC.Boot -> MainC;
 
   BLE_echoC.Timer0 -> Timer0;
-  BLE_echoC.Timer1 -> Timer1;
-  BLE_echoC.Timer2 -> Timer2;
   BLE_echoC.Leds -> LedsC;
   BLE_echoC.lib_aci -> Driver.lib_aci;
+  BLE_echoC.hal_aci_tl ->Driver.hal_aci_tl;
   }

@@ -18,7 +18,7 @@ interface nRF8001lib_aci
 	command bool is_pipe_available(aci_state_t *aci_stat, uint8_t pipe);
 	command bool is_pipe_closed(aci_state_t *aci_stat, uint8_t pipe);
 	command bool is_discovery_finished(aci_state_t *aci_stat);
-	command void board_init(aci_state_t *aci_stat);
+	//command void board_init(aci_state_t *aci_stat);
 	command void init(aci_state_t *aci_stat, bool debug);
 	command uint8_t get_nb_available_credits(aci_state_t *aci_stat);
 	command uint16_t get_cx_interval_ms(aci_state_t *aci_stat);
@@ -65,5 +65,6 @@ interface nRF8001lib_aci
 	command bool event_queue_full(void);
 	command bool command_queue_empty(void);
 	command bool command_queue_full(void);
+	command uint8_t do_aci_setup(aci_state_t *aci_stat);
 
 }

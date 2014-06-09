@@ -37,6 +37,7 @@
 #include "aci.h"
 #include "aci_cmds.h"
 #include "aci_evts.h"
+#include "services.h"
 
 
 #define EVT_CMD_RESPONSE_MIN_LENGTH              3
@@ -61,6 +62,7 @@ typedef struct aci_setup_info_t
 {
   services_pipe_type_mapping_t *services_pipe_type_mapping;
   uint8_t                       number_of_pipes;
+  //hal_aci_data_t                setup_msgs[NB_SETUP_MESSAGES];
   hal_aci_data_t               *setup_msgs;
   uint8_t                       num_setup_msgs;
 } aci_setup_info_t;

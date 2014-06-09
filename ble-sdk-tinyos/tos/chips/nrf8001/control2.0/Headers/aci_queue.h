@@ -39,7 +39,7 @@
 /* The ACI_QUEUE_SIZE determines the memory usage of the system.            */
 /* Successfully tested to a ACI_QUEUE_SIZE of 4 (interrupt) and 4 (polling) */
 /***********************************************************************    */
-#define ACI_QUEUE_SIZE  4
+#define ACI_QUEUE_SIZE  2
 
 /** Data type for queue of data packets to send/receive from radio.
  *
@@ -55,7 +55,7 @@ typedef struct {
 	uint8_t                  tail;
 } aci_queue_t;
 
-void aci_queue_init(aci_queue_t *aci_q);
+/*void aci_queue_init(aci_queue_t *aci_q);
 
 bool aci_queue_dequeue(aci_queue_t *aci_q, hal_aci_data_t *p_data);
 bool aci_queue_dequeue_from_isr(aci_queue_t *aci_q, hal_aci_data_t *p_data);
@@ -70,7 +70,7 @@ bool aci_queue_is_full(aci_queue_t *aci_q);
 bool aci_queue_is_full_from_isr(aci_queue_t *aci_q);
 
 bool aci_queue_peek(aci_queue_t *aci_q, hal_aci_data_t *p_data);
-bool aci_queue_peek_from_isr(aci_queue_t *aci_q, hal_aci_data_t *p_data);
+bool aci_queue_peek_from_isr(aci_queue_t *aci_q, hal_aci_data_t *p_data);*/
 
 #endif /* ACI_QUEUE_H__ */
 /** @} */

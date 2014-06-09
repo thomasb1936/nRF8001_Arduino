@@ -6,6 +6,7 @@
 #include "hal_aci_tl.h"
 #include "aci_queue.h"
 #include "ble_assert.h"
+#include "printf.h"
 
 module nRF8001aci_queueP
 {
@@ -39,11 +40,15 @@ implementation
 
     if (call aci_queue.is_empty(aci_q))
     {
+      
       return FALSE;
+
     }
 
     memcpy((uint8_t *)p_data, (uint8_t *)&(aci_q->aci_data[aci_q->head]), sizeof(hal_aci_data_t));
     aci_q->head = (aci_q->head + 1) % ACI_QUEUE_SIZE;
+    //printf("dequeue\n");
+    //printfflush();
 
     return TRUE;
   }
@@ -73,13 +78,16 @@ implementation
 
     if (call aci_queue.is_full(aci_q))
     {
+
       return FALSE;
     }
 
     aci_q->aci_data[aci_q->tail].status_byte = 0;
     memcpy((uint8_t *)&(aci_q->aci_data[aci_q->tail].buffer[0]), (uint8_t *)&p_data->buffer[0], length + 1);
     aci_q->tail = (aci_q->tail + 1) % ACI_QUEUE_SIZE;
-
+    //printf("enqueue\n");
+    //printfflush();
+    
     return TRUE;
   }
 

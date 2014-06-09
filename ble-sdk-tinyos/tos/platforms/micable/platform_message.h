@@ -51,20 +51,20 @@
 #ifndef PLATFORM_MESSAGE_H
 #define PLATFORM_MESSAGE_H
 
-#include "nrf8001.h"
+#include "CC2420.h"
 #include "Serial.h"
 
 typedef union message_header {
-  nrf8001_header_t nrf8001;
+  cc2420_header_t cc2420;
   serial_header_t serial;
 } message_header_t;
 
 typedef union message_footer {
-  nrf8001_footer_t nrf8001;
+  cc2420_footer_t cc2420;
 } message_footer_t;
 
 typedef union message_metadata {
-  nrf8001_metadata_t nrf8001;
+  cc2420_metadata_t cc2420;
   serial_metadata_t serial;
 } message_metadata_t;
 

@@ -1,3 +1,5 @@
+//#define NEW_PRINTF_SEMANTICS
+//#include "printf.h"
 
 configuration nRF8001DriverLayerC{
 	provides interface nRF8001hal_aci_tl as hal_aci_tl;
@@ -15,7 +17,12 @@ implementation
 		HplNRF8001C as HplC,
 		BusyWaitMicroC,
 		MainC,
-		LedsC;
+		LedsC,
+		SerialActiveMessageC as Serial,
+		PrintfC,
+  		SerialStartC;
+		//PrinfC,
+		//SerialStartC;
 
 
 
@@ -35,6 +42,10 @@ implementation
 	hal.REQN -> HplC.REQN;
 	hal.RDYN -> HplC.RDYN;
 
+	hal.SCK -> HplC.SCK;
+	hal.MISO -> HplC.MISO;
+	hal.MOSI -> HplC.MOSI;
+
 	hal.Leds -> LedsC;
 
 	hal.BusyWait -> BusyWaitMicroC;
@@ -53,6 +64,7 @@ implementation
      lib.hal_aci_tl -> hal.hal_aci_tl;
 	 lib.acil -> acilib.acil;
 	 lib.Leds -> LedsC;
+	 lib.UartSend->Serial;
 
 	 aciqueue.Leds -> LedsC;
 

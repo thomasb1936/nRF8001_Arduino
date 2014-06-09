@@ -8,6 +8,12 @@ configuration HplNRF8001C {
     interface GeneralIO as REQN;
     interface GeneralIO as RDYN;
 
+    interface GeneralIO as SCK;
+    interface GeneralIO as MOSI;
+    interface GeneralIO as MISO;
+
+
+
     interface Init; //as of 5/20 I have no idea what this does, update 5/30....still no clue
 
     interface GpioInterrupt as InterruptRDYN;
@@ -32,6 +38,10 @@ implementation {
 	RESET  = IO.PortF3;
 	REQN   = IO.PortE5;
 	RDYN   = IO.PortE4; 
+
+	SCK	   = IO.PortC2;
+	MOSI   = IO.PortC3;
+	MISO   = IO.PortC4;
 
 	components new Atm128GpioInterruptC() as InterruptRDYNC;
 	components HplAtm128InterruptC as Interrupts;
